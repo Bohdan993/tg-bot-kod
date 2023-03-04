@@ -2,19 +2,33 @@ import React from 'react';
 import './Footer.css';
 import {CContainer,CRow,CCol} from '@coreui/react';
 import { Link } from "react-router-dom";
+import { ReactComponent as AboutIcon } from '../../Images/about.svg'
+import { ReactComponent as FilialsIcon } from '../../Images/filials.svg'
+import { ReactComponent as SessionIcon } from '../../Images/session.svg'
+
+
 
 const Footer = () => {
     return (
-        <CContainer>
-            <CRow>
-                <CCol>
-                <Link className="btn btn-dark" to={'/'}>Філіали</Link>
+        <CContainer className="footer flex-nowrap">
+            <CRow xs={{ gutterX: 0 }} className='d-flex justify-content-center w-100'>
+                <CCol className="text-center">
+                    <Link to={'/'} className="d-flex flex-column align-items-center">
+                        <FilialsIcon/>
+                        Філіали
+                    </Link>
                 </CCol>
-                <CCol>
-                    <Link className="btn btn-dark" to={'masters/55'}>Запис</Link>
+                <CCol className="text-center">
+                    <Link to={'masters/55'} className="d-flex flex-column align-items-center">
+                        <SessionIcon/>
+                        Запис
+                    </Link>
                 </CCol>
-                <CCol>
-                    <Link className="btn btn-dark" to={'about'}>Про нас</Link>
+                <CCol className="text-center">
+                    <Link to={'about'} className="d-flex flex-column align-items-center">
+                        <AboutIcon/>
+                        Про нас
+                    </Link>
                 </CCol>
             </CRow>
         </CContainer>

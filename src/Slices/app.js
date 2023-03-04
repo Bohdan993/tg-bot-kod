@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
     loading: false,
     info: {},
-    activeBranchId: null,
+    // activeBranchId: null,
     activeMasterId: null,
     activeServiceId: null,
     activeRelatedServices: []
@@ -24,7 +24,13 @@ export const slice = createSlice({
       action
     ) {
       state.info = {...state.info, ...action.payload};
-    }
+    },
+    // setCompanyId(
+    //   state,
+    //   action
+    // ) {
+    //   state.activeBranchId = action.payload;
+    // }
   }
 });
 

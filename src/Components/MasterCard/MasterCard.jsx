@@ -10,7 +10,7 @@ const MasterCard = ({user, products, itemKey}) => {
                 <CContainer>
                     <CRow>
                         <CCol>
-                            <CCard className="flex-column justify-content-between flex-sm-row master-card">
+                            <CCard className="flex-column align-items-center justify-content-between flex-sm-row master-card">
                                 <CCardImage className="card-user-image" src={user?.avatar} />
                                 <CCardBody className="d-flex flex-column justify-content-between flex-sm-row align-items-center">
                                     <CCardTitle className="mb-0">{user?.name} ({products?.length})</CCardTitle>
@@ -23,7 +23,7 @@ const MasterCard = ({user, products, itemKey}) => {
             <CAccordionBody>
             {products?.length && products.map(product => {
                 return (
-                    <CContainer>
+                    <CContainer key={product?.id}>
                         <CRow>
                             <CCol>
                                 <CCard className="flex-column justify-content-between flex-sm-row mb-3">

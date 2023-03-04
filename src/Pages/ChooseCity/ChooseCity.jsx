@@ -1,16 +1,22 @@
 import React from 'react';
 import './ChooseCity.css';
 import {CContainer,CRow,CCol,CCard,CCardImage,CCardBody,CCardTitle,CCardText} from '@coreui/react';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+// import { setCompanyId } from '../../Slices/app';
+
+
 
 const ChooseCity = () => {
     const companyBranches = useSelector(state => state.app.info)?.branches;
-    const handleClick = (e) => {
+    const dispatch = useDispatch();
 
-    }
+    // const handleClick = (id, e) => {
+    //     dispatch(setCompanyId(id));
+    // }
+
     return (
-        <CContainer className="choose-city-page main-content">
+        <CContainer className="choose-city-page main-content page">
             <CRow className="mt-5 mb-4">
                 <CCol className='text-center'>
                     <h1>
@@ -39,7 +45,7 @@ const ChooseCity = () => {
                                             <CCardText>
                                                 {company?.address?.address_1}, {company?.address?.city}, {company?.address?.postal_code}, {company?.address?.meta?.google_country_name}
                                             </CCardText>
-                                            <Link className="btn btn-dark" to={'masters/' + company?.id} onClick={handleClick}>Відкрити</Link>
+                                            <Link className="btn btn-dark" to={'masters/' + company?.id}>Відкрити</Link>
                                         </CCardBody>
                                     </CCard>
                                 </CCol>

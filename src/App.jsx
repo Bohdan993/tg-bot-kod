@@ -36,7 +36,7 @@ function App() {
         <Route index element={<ChooseCity />} />
         <Route path="/" element={<MainLayout />}>
           {/* <Route path={`/${ROUTES['employment']}`} element={<ChooseMaster />} /> */}
-          <Route path="masters/:cityId" element={<ChooseMaster />} />
+          <Route path="masters/:companyId" element={<ChooseMaster />} />
         </Route>
       </Routes>
     </BrowserRouter>

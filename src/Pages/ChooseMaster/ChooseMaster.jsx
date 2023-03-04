@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './ChooseMaster.css';
 import { useSelector } from "react-redux";
 import { useParams } from 'react-router-dom';
@@ -14,12 +14,12 @@ const vars = {
 }
 
 const ChooseMaster = () => {
-    const { cityId } = useParams();
-    const company = useSelector(state => state.app.info)?.branches?.filter(el => String(el.id) === String(cityId))[0];
+    const { companyId } = useParams();
+    const company = useSelector(state => state.app.info)?.branches?.filter(el => String(el.id) === String(companyId))[0];
     const users = company?.users;
     console.log(company);
     return (
-        <CContainer className="choose-master-page main-content">
+        <CContainer className="choose-master-page main-content page mb-5">
             <CAccordion style={vars}>
                 {users?.length && users.map((user, index) => {
                     const products = user?.products.filter(product => product?.name.toLowerCase().includes('стрижка'))
