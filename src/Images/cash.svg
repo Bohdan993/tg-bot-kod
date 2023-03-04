@@ -1,0 +1,5 @@
+<svg width="15" height="14" viewBox="0 0 15 14" fill="none">
+            <path d="M12.5571 3.96135c.5695.2278.9429.77936.9429 1.39272V10c0 .8284-.6716 1.5-1.5 1.5H3.56155c-.97585 0-1.69189-.9171-1.45521-1.8638l1.82303-7.29211C4.14983 1.46225 5.0977.977596 5.94166 1.31518l6.61544 2.64617z" fill="transparent" stroke="currentColor"></path>
+            <path d="M12 4.5c.8284 0 1.5.67157 1.5 1.5v6c0 .8284-.6716 1.5-1.5 1.5H3c-.82843 0-1.5-.6716-1.5-1.5V6c0-.82843.67157-1.5 1.5-1.5h9z" fill="var(--c-surface)" stroke="currentColor"></path>
+            <circle cx="4" cy="9" r="1" fill="currentColor"></circle>
+        </svg>

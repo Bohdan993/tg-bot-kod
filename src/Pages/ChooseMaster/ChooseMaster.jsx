@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import './ChooseMaster.css';
 import { useSelector } from "react-redux";
 import { useParams } from 'react-router-dom';
 import {CContainer, CAccordion} from '@coreui/react';
 import { MasterCard } from '../../Components/MasterCard';
+import { ServicesPopup } from '../../Components/ServicesPopup';
+import { Header } from "../../Components/Header";
 
 const vars = { 
     "--cui-accordion-active-bg": "#000000",
@@ -14,21 +16,51 @@ const vars = {
 }
 
 const ChooseMaster = () => {
+    const [currMasterId, setCurrMasterId] = useState(null);
+    const prevMasterIdRef = useRef();
     const { companyId } = useParams();
     const company = useSelector(state => state.app.info)?.branches?.filter(el => String(el.id) === String(companyId))[0];
     const users = company?.users;
-    console.log(company);
+
+    const handleClick = (id) => {
+        setCurrMasterId(id);
+    }
+
+    useEffect(()=>{
+        prevMasterIdRef.current = currMasterId;
+    }, [currMasterId]);
     return (
-        <CContainer className="choose-master-page main-content page mb-5">
-            <CAccordion style={vars}>
-                {users?.length && users.map((user, index) => {
-                    const products = user?.products.filter(product => product?.name.toLowerCase().includes('стрижка'))
-                    return (
-                        <MasterCard key={user?.id} user={user} products={products} itemKey={index}/>
-                    )
-                })}
-            </CAccordion>
-        </CContainer>
+        <>
+            <Header/>
+            <CContainer className="choose-master-page main-content page mb-5">
+                <CAccordion style={vars}>
+                    {users?.length && users.map((user, index) => {
+                        // const products = user?.products.filter(product => product?.name.toLowerCase().includes('стрижка'));
+                        const seen = {};
+                        const products = user?.products.filter(product => {
+                            let key = product?.name.toLowerCase();
+                            if(!(key in seen)) {
+                                seen[key] = true;
+                                return true;
+                            }
+                            return false;
+                        });
+                        return (
+                            <MasterCard 
+                                key={user?.id} 
+                                user={user} 
+                                products={products} 
+                                itemKey={index} 
+                                handleClick={handleClick}
+                                currMasterId={currMasterId}
+                                prevMasterId={prevMasterIdRef}
+                            />
+                        )
+                    })}
+                </CAccordion>
+                <ServicesPopup/>
+            </CContainer>
+        </>
     );
 };
 

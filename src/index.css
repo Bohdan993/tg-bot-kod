@@ -73,3 +73,27 @@ body {
   height: 100%;
   transform: translate(-50%, -50%);
 }
+
+.custom-offcanvas {
+  color: var(--cui-heading-color);
+  padding: 1rem;
+  border-radius: 10px;
+  bottom: calc(env(safe-area-inset-bottom) + 5.5rem);
+  margin-top: 1rem;
+  box-shadow: 0 19px 38px rgb(56 56 104 / 15%);
+  z-index: 5;
+  border: unset;
+}
+
+.custom-offcanvas.offcanvas-bottom {
+  height: auto;
+}
+
+.custom-offcanvas.show, .custom-offcanvas.showing {
+  position: sticky;
+}
+
+.custom-offcanvas .offcanvas-header, .custom-offcanvas .offcanvas-body {
+  padding-left: 0;
+  padding-right: 0;
+}

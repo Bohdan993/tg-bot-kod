@@ -1,11 +1,13 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
+import { About } from './Pages/About';
 import { ChooseCity } from './Pages/ChooseCity';
 import { ChooseMaster } from './Pages/ChooseMaster';
 import { useDispatch, useSelector } from "react-redux";
 import { getBaseData } from './Thunks/app';
 import { MainLayout } from './Components/MainLayout';
+import { RelatedServices } from './Pages/RelatedServices';
 
 
 
@@ -36,7 +38,9 @@ function App() {
         <Route index element={<ChooseCity />} />
         <Route path="/" element={<MainLayout />}>
           {/* <Route path={`/${ROUTES['employment']}`} element={<ChooseMaster />} /> */}
+          <Route path="about" element={<About />} />
           <Route path="masters/:companyId" element={<ChooseMaster />} />
+          <Route path="related-services/:companyId/:serviceId" element={<RelatedServices/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

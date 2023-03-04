@@ -1,3 +1,17 @@
+.footer {
+    position: sticky;
+    bottom: 0;
+    background-color: #ffffff;
+    border-top: unset;
+    box-shadow: 0 19px 38px rgb(56 56 104 / 15%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 10px max(env(safe-area-inset-bottom),10px);
+    z-index: 1;
+    flex-shrink: 0;
+}
+
 .footer a {
     text-decoration: none;
     color: var(--cui-heading-color);

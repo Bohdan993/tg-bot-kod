@@ -3,9 +3,9 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
     loading: false,
     info: {},
-    // activeBranchId: null,
-    activeMasterId: null,
-    activeServiceId: null,
+    activeBranchId: null,
+    activeMaster: null,
+    activeService: null,
     activeRelatedServices: []
 };
 
@@ -25,15 +25,27 @@ export const slice = createSlice({
     ) {
       state.info = {...state.info, ...action.payload};
     },
-    // setCompanyId(
-    //   state,
-    //   action
-    // ) {
-    //   state.activeBranchId = action.payload;
-    // }
+    setCompanyId(
+      state,
+      action
+    ) {
+      state.activeBranchId = action.payload;
+    },
+    setActiveMaster(
+      state,
+      action
+    ) {
+      state.activeMaster = action.payload;
+    },
+    setActiveService(
+      state,
+      action
+    ) {
+      state.activeService = action.payload;
+    }
   }
 });
 
-export const { setLoading, setCompanyInfo } = slice.actions;
+export const { setLoading, setCompanyInfo, setCompanyId, setActiveService, setActiveMaster } = slice.actions;
 
 export const { reducer } = slice;
