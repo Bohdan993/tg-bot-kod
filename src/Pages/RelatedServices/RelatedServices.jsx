@@ -18,8 +18,9 @@ const RelatedServices = () => {
     console.log(relatedServices);
     return (
         <>
+
             <Header/>
-            {relatedServices?.length && relatedServices.map((product, ind) => {
+            {relatedServices?.length && relatedServices.map(product => {
                 return (
                     <CContainer key={product?.id}>
                         <CRow>

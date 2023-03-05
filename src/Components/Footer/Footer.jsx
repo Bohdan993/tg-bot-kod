@@ -10,7 +10,11 @@ import { useSelector } from 'react-redux';
 
 
 const Footer = () => {
+
     const companyId = useSelector(state => state.app.activeBranchId);
+    const activeMasterId = useSelector(state => state.app.activeMaster?.id);
+    const activeServiceId = useSelector(state => state.app.activeService?.Id);
+    
     return (
         <CContainer className="footer">
             <CRow xs={{ gutterX: 0 }} className='d-flex justify-content-center w-100'>
@@ -22,7 +26,7 @@ const Footer = () => {
                 </CCol>
                 {companyId && (
                     <CCol className="text-center">
-                        <Link to={`masters/${companyId}`} className="d-flex flex-column align-items-center">
+                        <Link to={`masters/${companyId}?masterId=${activeMasterId}&serviceId=${activeServiceId}`} className="d-flex flex-column align-items-center">
                             <SessionIcon/>
                             Запис
                         </Link>

@@ -1,11 +1,11 @@
-import React, {useState, useRef, useEffect} from 'react';
-import './ChooseMaster.css';
+import React, {useState, useEffect} from 'react';
 import { useSelector } from "react-redux";
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import {CContainer, CAccordion} from '@coreui/react';
 import { MasterCard } from '../../Components/MasterCard';
 import { ServicesPopup } from '../../Components/ServicesPopup';
 import { Header } from "../../Components/Header";
+import './ChooseMaster.css';
 
 const vars = { 
     "--cui-accordion-active-bg": "#000000",
@@ -16,8 +16,8 @@ const vars = {
 }
 
 const ChooseMaster = () => {
+    const [searchParams, _] = useSearchParams();
     const [currMasterId, setCurrMasterId] = useState(null);
-    const prevMasterIdRef = useRef();
     const { companyId } = useParams();
     const company = useSelector(state => state.app.info)?.branches?.filter(el => String(el.id) === String(companyId))[0];
     const users = company?.users;
@@ -25,16 +25,12 @@ const ChooseMaster = () => {
     const handleClick = (id) => {
         setCurrMasterId(id);
     }
-
-    useEffect(()=>{
-        prevMasterIdRef.current = currMasterId;
-    }, [currMasterId]);
     return (
         <>
             <Header/>
             <CContainer className="choose-master-page main-content page mb-5">
-                <CAccordion style={vars}>
-                    {users?.length && users.map((user, index) => {
+                <CAccordion style={vars} activeItemKey={currMasterId || searchParams.get('masterId')}>
+                    {users?.length && users.map(user => {
                         // const products = user?.products.filter(product => product?.name.toLowerCase().includes('стрижка'));
                         const seen = {};
                         const products = user?.products.filter(product => {
@@ -45,15 +41,15 @@ const ChooseMaster = () => {
                             }
                             return false;
                         });
+
                         return (
                             <MasterCard 
                                 key={user?.id} 
                                 user={user} 
-                                products={products} 
-                                itemKey={index} 
+                                services={products} 
+                                itemKey={String(user?.id)} 
                                 handleClick={handleClick}
                                 currMasterId={currMasterId}
-                                prevMasterId={prevMasterIdRef}
                             />
                         )
                     })}
