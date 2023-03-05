@@ -7,13 +7,10 @@ import { ReactComponent as FilialsIcon } from '../../Images/filials.svg'
 import { ReactComponent as SessionIcon } from '../../Images/session.svg'
 import { useSelector } from 'react-redux';
 
-
-
 const Footer = () => {
-
     const companyId = useSelector(state => state.app.activeBranchId);
-    const activeMasterId = useSelector(state => state.app.activeMaster?.id);
-    const activeServiceId = useSelector(state => state.app.activeService?.Id);
+    const masterId = useSelector(state => state.app.activeMaster?.id);
+    const serviceId = useSelector(state => state.app.activeService?.id);
     
     return (
         <CContainer className="footer">
@@ -26,14 +23,14 @@ const Footer = () => {
                 </CCol>
                 {companyId && (
                     <CCol className="text-center">
-                        <Link to={`masters/${companyId}?masterId=${activeMasterId}&serviceId=${activeServiceId}`} className="d-flex flex-column align-items-center">
+                        <Link to={`masters/${companyId}?masterId=${masterId}&serviceId=${serviceId}`} className="d-flex flex-column align-items-center">
                             <SessionIcon/>
                             Запис
                         </Link>
                     </CCol>
                 )}
                 <CCol className="text-center">
-                    <Link to={'about'} className="d-flex flex-column align-items-center">
+                    <Link to={`about/${companyId}`} className="d-flex flex-column align-items-center">
                         <AboutIcon/>
                         Про нас
                     </Link>

@@ -1,8 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {CContainer,CRow,CCol,CCard,CCardImage,CCardBody,CCardTitle,CAccordionItem, CAccordionHeader, CAccordionBody} from '@coreui/react';
 import { setActiveMaster, setActiveService } from '../../Slices/app';
 import { useDispatch } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
+import { ReactComponent as CashIcon } from '../../Images/cash.svg'
+import { ReactComponent as TimeIcon } from '../../Images/time.svg'
 import './MasterCard.css';
 
 const MasterCard = ({user, services, itemKey, handleClick: clickHandler, currMasterId}) => {
@@ -59,7 +61,16 @@ const MasterCard = ({user, services, itemKey, handleClick: clickHandler, currMas
                             <CCol>
                                 <CCard className="flex-column justify-content-between flex-sm-row mb-3">
                                     <CCardBody className="d-flex flex-column justify-content-between flex-sm-row align-items-center">
-                                        <CCardTitle className="mb-0">{service?.name}---{service?.id}</CCardTitle>
+                                        <CContainer>
+                                            <CCardTitle>{service?.name}</CCardTitle>
+                                            <CContainer className="ps-0">
+                                                <CContainer className="d-flex ps-0">
+                                                    <p className="me-5 d-flex align-items-center flex-nowrap"><TimeIcon className="me-2"/>{service?.duration} хв.</p>
+                                                    <p className="d-flex align-items-center flex-nowrap"><CashIcon className="me-2"/>{service?.price_formatted}</p>
+                                                </CContainer>
+                                            </CContainer>
+                                        </CContainer>
+                                        <CContainer className="w-auto"></CContainer>
                                     </CCardBody>
                                 </CCard>
                             </CCol>

@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import './App.css';
 import { About } from './Pages/About';
 import { ChooseCity } from './Pages/ChooseCity';
 import { ChooseMaster } from './Pages/ChooseMaster';
@@ -8,6 +7,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { getBaseData } from './Thunks/app';
 import { MainLayout } from './Components/MainLayout';
 import { RelatedServices } from './Pages/RelatedServices';
+import { OurTeam } from './Pages/OurTeam';
+import { Oval } from 'react-loader-spinner';
+import './App.css';
+
 
 
 
@@ -24,7 +27,19 @@ function App() {
 
   if(isLoading) {
     return (
-      <div>App is loading ... </div>
+      <Oval
+        height={75}
+        width={75}
+        // color="black"
+        wrapperStyle={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}
+        wrapperClass="preloader"
+        visible={true}
+        ariaLabel='oval-loading'
+        // secondaryColor="black"
+        strokeWidth={5}
+        strokeWidthSecondary={5}
+
+      />
     )
   }
 
@@ -40,7 +55,8 @@ function App() {
           {/* <Route path={`/${ROUTES['employment']}`} element={<ChooseMaster />} /> */}
           <Route path="about" element={<About />} />
           <Route path="masters/:companyId" element={<ChooseMaster />} />
-          <Route path="related-services/:companyId/:serviceId" element={<RelatedServices/>}/>
+          <Route path="related-services/:companyId" element={<RelatedServices/>}/>
+          <Route path="our-team/:companyId" element={<OurTeam/>}/>
         </Route>
       </Routes>
     </BrowserRouter>

@@ -97,3 +97,11 @@ body {
   padding-left: 0;
   padding-right: 0;
 }
+
+.preloader svg {
+  stroke: var(--tg-theme-text-color);
+}
+
+.preloader circle {
+  stroke: var(--tg-theme-text-color);
+}

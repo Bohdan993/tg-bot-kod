@@ -4,18 +4,18 @@ import { findRelatedServices } from '../../Utils/findRelatedServices';
 import {CContainer,CRow,CCol,CCard,CCardBody,CCardTitle} from '@coreui/react';
 import './RelatedServices.css';
 import { Header } from "../../Components/Header";
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 
-
+// useSearchParams
 
 const RelatedServices = () => {
     const {companyId, serviceId} = useParams();
-    console.log(companyId, serviceId)
+    // console.log(companyId, serviceId)
     const services = useSelector(state => state.app.info?.products);
     const branches = useSelector(state => state.app.info?.branches);
     const relatedServices = findRelatedServices(Number(serviceId), services, branches?.find(branch => Number(branch.id) === Number(companyId)));
-    console.log(relatedServices);
+    // console.log(relatedServices);
     return (
         <>
 
