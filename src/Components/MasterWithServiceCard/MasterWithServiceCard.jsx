@@ -10,11 +10,12 @@ import './MasterWithServiceCard.css';
 
 
 
-
 const MasterWithServiceCard = ({user, services, itemKey, handleClick: clickHandler}) => {
     const [activeServices, setActiveServices] = useState(services.map(() => false));
-    const [_, setSearchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
     const dispatch = useDispatch();
+    const masterId = searchParams.get('masterId');
+    const serviceId = searchParams.get('serviceId');
 
     const handleClick = (index, service, user) => {
         setSearchParams(`masterId=${user?.id}&serviceId=${service?.id}`);
@@ -40,7 +41,7 @@ const MasterWithServiceCard = ({user, services, itemKey, handleClick: clickHandl
     return (
         <CAccordionItem itemKey={itemKey}>
             <CAccordionHeader onClick={handleAccordionClick}>
-                <CContainer>
+                <CContainer className="py-0">
                     <CRow>
                         <CCol>
                             <MasterCard
@@ -53,12 +54,16 @@ const MasterWithServiceCard = ({user, services, itemKey, handleClick: clickHandl
             </CAccordionHeader>
             <CAccordionBody>
             {services?.length && services.map((service, ind) => {
+                const active = (activeServices[ind] || 
+                    (masterId === String(user?.id) && serviceId === String(service?.id))) ? 
+                    true : 
+                    false;
                 return (
                     <ServiceCard
                         key={service?.id}
                         service={service}
                         ind={ind}
-                        activeServices={activeServices}
+                        active={active}
                         user={user}
                         handleClick={handleClick}
                     />

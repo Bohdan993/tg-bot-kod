@@ -8,6 +8,7 @@ import { getBaseData } from './Thunks/app';
 import { MainLayout } from './Components/MainLayout';
 import { RelatedServices } from './Pages/RelatedServices';
 import { OurTeam } from './Pages/OurTeam';
+import { ChooseDate } from './Pages/ChooseDate';
 import { Oval } from 'react-loader-spinner';
 import './App.css';
 
@@ -54,6 +55,7 @@ function App() {
           <Route path="masters/:companyId" element={<ChooseMaster />} />
           <Route path="related-services/:companyId" element={<RelatedServices/>}/>
           <Route path="our-team/:companyId" element={<OurTeam/>}/>
+          <Route path="date/:companyId" element={<ChooseDate/>}/>
         </Route>
       </Routes>
   );

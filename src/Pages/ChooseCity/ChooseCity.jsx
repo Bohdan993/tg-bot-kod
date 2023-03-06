@@ -1,23 +1,29 @@
-import React,{useEffect} from 'react';
-import './ChooseCity.css';
 import {CContainer,CRow,CCol,CCard,CCardImage,CCardBody,CCardTitle,CCardText} from '@coreui/react';
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { setActiveService, setCompanyId } from '../../Slices/app';
+import { useNavigate } from "react-router-dom";
+import { setCompanyId } from '../../Slices/app';
+import './ChooseCity.css';
 
 
 
 const ChooseCity = () => {
+    const navigate = useNavigate();
+    const companyId = useSelector(state => state.app.activeBranchId);
+    const masterId = useSelector(state => state.app.activeMaster?.id);
+    const serviceId = useSelector(state => state.app.activeService?.id);
     const companyBranches = useSelector(state => state.app.info)?.branches;
     const dispatch = useDispatch();
 
-    const handleClick = (id, e) => {
-        dispatch(setCompanyId(id));
-    }
+    const handleClick = (company, e) => {
 
-    useEffect(()=>{
-        dispatch(setActiveService(null));
-    }, []);
+        if(String(companyId) === String(company?.id) && masterId && serviceId) {
+            navigate(`/masters/${companyId}?masterId=${masterId}&serviceId=${serviceId}`);
+        } else {
+            navigate(`/masters/${company?.id}`);
+        }
+
+        dispatch(setCompanyId(company?.id));
+    }
 
     return (
         <CContainer className="choose-city-page main-content page">
@@ -48,7 +54,8 @@ const ChooseCity = () => {
                                             <CCardText>
                                                 {company?.address?.address_1}, {company?.address?.city}, {company?.address?.postal_code}, {company?.address?.meta?.google_country_name}
                                             </CCardText>
-                                            <Link className="btn btn-dark" to={'masters/' + company?.id} onClick={(e) => handleClick(company?.id, e)}>Відкрити</Link>
+                                            {/* <Link className="btn btn-dark" to={'masters/' + company?.id} onClick={(e) => handleClick(company?.id, e)}>Відкрити</Link> */}
+                                            <CContainer className="btn btn-dark d-inline" onClick={(e) => handleClick(company, e)}>Відкрити</CContainer>
                                         </CCardBody>
                                     </CCard>
                                 </CCol>

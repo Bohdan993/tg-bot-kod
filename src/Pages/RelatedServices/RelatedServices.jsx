@@ -90,12 +90,16 @@ const RelatedServices = () => {
                         </CCol>
                     </CRow>
                     {relatedServices?.length && relatedServices.map((service, ind) => {
+                        const active = (activeServices[ind] || 
+                            (masterId === String(master?.id) && serviceId === String(service?.id))) ? 
+                            true : 
+                            false;
                         return (
                             <ServiceCard
                                 key={service?.id}
                                 service={service}
                                 ind={ind}
-                                activeServices={activeServices}
+                                active={active}
                                 user={master}
                                 handleClick={handleClick}
                             />

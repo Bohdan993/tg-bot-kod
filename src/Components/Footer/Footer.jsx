@@ -8,8 +8,6 @@ import './Footer.css';
 
 
 
-
-
 const Footer = () => {
     const { companyId } = useParams();
     const [searchParams, _] = useSearchParams();

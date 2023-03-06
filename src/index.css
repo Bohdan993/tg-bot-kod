@@ -1,4 +1,6 @@
 @import '@coreui/coreui/dist/css/coreui.min.css';
+@import 'react-calendar/dist/Calendar.css';
+
 
 html {
   font-size: 14px;
@@ -50,6 +52,7 @@ body {
   height: 60px;
   border-radius: 50%;
 }
+
 
 .accordion-button:not(.collapsed) .card {
   background-color: #000000;
@@ -107,4 +110,8 @@ body {
 
 .preloader circle {
   stroke: var(--tg-theme-text-color);
+}
+
+.react-calendar {
+  width: 450px;
 }

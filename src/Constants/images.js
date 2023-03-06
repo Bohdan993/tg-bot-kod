@@ -32,11 +32,17 @@ import photo17L from '../Images/lvivska/aHR0cHM6Ly9zdG9yYWdlLmVhc3l3ZWVrLmlvL2xp
 import photo18L from '../Images/lvivska/aHR0cHM6Ly9zdG9yYWdlLmVhc3l3ZWVrLmlvL2xpdmUvbWVkaWEvMjg0MTQvYnJhbmNoX2ltYWdlc19ZWTF2VW1OZi5qcGc.png';
 import photo19L from '../Images/lvivska/aHR0cHM6Ly9zdG9yYWdlLmVhc3l3ZWVrLmlvL2xpdmUvbWVkaWEvMjg0MTUvYnJhbmNoX2ltYWdlc19nNXJsdmFGSi5qcGc.png';
 
+import user from '../Images/simple-user-icon.png';
+
 
 const kyivskaImages = [photo1K, photo2K, photo3K, photo4K, photo5K, photo6K, photo7K, photo8K, photo9K, photo10K, photo11K, photo12K, photo13K];
 const lvivskaImages = [photo1L, photo2L, photo3L, photo4L, photo5L, photo6L, photo7L, photo8L, photo9L, photo10L, photo11L, photo12L, photo13L, photo14L, photo15L, photo16L, photo17L, photo18L, photo19L];
 
 export const images =  {
     '35070': kyivskaImages,
-    '16266': lvivskaImages
+    '16266': lvivskaImages,
+}
+
+export {
+    user
 }

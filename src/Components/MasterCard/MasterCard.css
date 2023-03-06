@@ -1,0 +1,7 @@
+.master-card.active .card {
+    border: 1px solid #000000!important;
+}
+
+.master-card .card {
+    cursor: pointer;
+}

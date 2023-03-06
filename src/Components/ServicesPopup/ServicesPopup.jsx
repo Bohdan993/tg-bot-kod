@@ -43,17 +43,17 @@ const ServicesPopup = () => {
 
     return (
       <COffcanvas className="custom-offcanvas choosen-services" placement="bottom" visible={!!service} backdrop={false} scroll={true}>
-          <COffcanvasHeader>
+          <COffcanvasHeader className='py-0'>
             <COffcanvasTitle>Ваше замовлення</COffcanvasTitle>
           </COffcanvasHeader>
           <COffcanvasBody className="d-flex">
             <CContainer className="ps-0 flex-grow-1">
               <h4>{service?.name}{relatedServices?.length ? `, ${relatedServices.map(el => el?.name).join(', ')}` : ''}</h4>
               <CContainer className="d-flex ps-0">
-                <p className="me-5 d-flex align-items-center flex-nowrap"><TimeIcon className="me-2"/>
+                <p className="me-5 d-flex align-items-center flex-nowrap mb-0"><TimeIcon className="me-2"/>
                   {service?.duration + (relatedServices?.length ? relatedServices?.map(el => el?.duration)?.reduce((acc, curr) => acc+curr) : 0)} хв.
                 </p>
-                <p className="d-flex align-items-center flex-nowrap"><CashIcon className="me-2"/>
+                <p className="d-flex align-items-center flex-nowrap mb-0"><CashIcon className="me-2"/>
                   {service?.price_amount + (relatedServices?.length ? relatedServices?.map(el => el?.price_amount)?.reduce((acc, curr) => acc+curr) : 0)} грн.
                 </p>
               </CContainer>
