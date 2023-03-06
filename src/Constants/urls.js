@@ -1,3 +1,4 @@
 export const URLS = {
-    getCompanyConfig: `/bookings/widgets/company/${process.env.REACT_APP_COMPANY}/type/external`
+    getCompanyConfig: `/bookings/widgets/company/${process.env.REACT_APP_COMPANY}/type/external`,
+    getMasterFreeDate: `/bookings/company/${process.env.REACT_APP_COMPANY}/employees/dates`
 }

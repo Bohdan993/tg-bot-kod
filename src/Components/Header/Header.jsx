@@ -10,7 +10,7 @@ const Header = () => {
     const currImages = images[companyId];
 
     return (
-        <CContainer className="header">
+        <CContainer className="header border-0 mb-5">
             <CRow xs={{gutterX: 0}} className='w-100'>
                 <CCol>
                     <CCarousel indicators touch>

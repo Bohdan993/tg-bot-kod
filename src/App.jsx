@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { About } from './Pages/About';
 import { ChooseCity } from './Pages/ChooseCity';
 import { ChooseMaster } from './Pages/ChooseMaster';
@@ -12,9 +12,8 @@ import { Oval } from 'react-loader-spinner';
 import './App.css';
 
 
-
-
 const tg = window.Telegram.WebApp;
+
 function App() {
   const isLoading = useSelector(state => state.app.loading);
   const data = useSelector(state => state.app.info);
@@ -25,17 +24,16 @@ function App() {
     dispatch(getBaseData());
   }, [dispatch]);
 
+
   if(isLoading) {
     return (
       <Oval
         height={75}
         width={75}
-        // color="black"
         wrapperStyle={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}
         wrapperClass="preloader"
         visible={true}
         ariaLabel='oval-loading'
-        // secondaryColor="black"
         strokeWidth={5}
         strokeWidthSecondary={5}
 
@@ -48,18 +46,16 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
       <Routes>
         <Route index element={<ChooseCity />} />
         <Route path="/" element={<MainLayout />}>
           {/* <Route path={`/${ROUTES['employment']}`} element={<ChooseMaster />} /> */}
-          <Route path="about" element={<About />} />
+          <Route path="about/:companyId" element={<About />} />
           <Route path="masters/:companyId" element={<ChooseMaster />} />
           <Route path="related-services/:companyId" element={<RelatedServices/>}/>
           <Route path="our-team/:companyId" element={<OurTeam/>}/>
         </Route>
       </Routes>
-    </BrowserRouter>
   );
 }
 

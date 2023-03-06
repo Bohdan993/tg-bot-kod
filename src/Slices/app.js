@@ -6,7 +6,7 @@ const initialState = {
     activeBranchId: null,
     activeMaster: null,
     activeService: null,
-    activeRelatedServices: []
+    activeRelatedServices: null
 };
 
 export const slice = createSlice({
@@ -42,10 +42,23 @@ export const slice = createSlice({
       action
     ) {
       state.activeService = action.payload;
+    },
+    setActiveRelatedServices(
+      state,
+      action
+    ) {
+      state.activeRelatedServices = action.payload;
     }
   }
 });
 
-export const { setLoading, setCompanyInfo, setCompanyId, setActiveService, setActiveMaster } = slice.actions;
+export const { 
+  setLoading, 
+  setCompanyInfo, 
+  setCompanyId, 
+  setActiveService, 
+  setActiveMaster, 
+  setActiveRelatedServices 
+} = slice.actions;
 
 export const { reducer } = slice;

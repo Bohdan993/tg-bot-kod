@@ -6,7 +6,10 @@ html {
 
 body {
   background-color: var(--tg-theme-bg-color);
-  /* color: var(--tg-theme-text-color); */
+}
+
+.tg-text {
+  color: var(--tg-theme-text-color);
 }
 
 .card {
@@ -81,7 +84,7 @@ body {
   bottom: calc(env(safe-area-inset-bottom) + 5.5rem);
   margin-top: 1rem;
   box-shadow: 0 19px 38px rgb(56 56 104 / 15%);
-  z-index: 5;
+  z-index: 6;
   border: unset;
 }
 

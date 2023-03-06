@@ -1,11 +1,11 @@
 import React from 'react';
+import { Header } from '../../Components/Header';
 import './About.css';
-
 const About = () => {
     return (
-        <div>
-            <h1>Про нас</h1>
-        </div>
+        <>
+            <Header/>
+        </>
     );
 };
 

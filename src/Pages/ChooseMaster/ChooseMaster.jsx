@@ -1,11 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import { useSelector } from "react-redux";
 import { useParams, useSearchParams } from 'react-router-dom';
-import {CContainer, CAccordion} from '@coreui/react';
-import { MasterCard } from '../../Components/MasterCard';
+import {CContainer, CAccordion, CRow, CCol} from '@coreui/react';
+import { MasterWithServiceCard } from '../../Components/MasterWithServiceCard';
 import { ServicesPopup } from '../../Components/ServicesPopup';
 import { Header } from "../../Components/Header";
 import './ChooseMaster.css';
+
+
 
 const vars = { 
     "--cui-accordion-active-bg": "#000000",
@@ -19,7 +21,7 @@ const ChooseMaster = () => {
     const [searchParams, _] = useSearchParams();
     const [currMasterId, setCurrMasterId] = useState(null);
     const { companyId } = useParams();
-    const company = useSelector(state => state.app.info)?.branches?.filter(el => String(el.id) === String(companyId))[0];
+    const company = useSelector(state => state.app.info?.branches?.find(el => String(el.id) === String(companyId)));
     const users = company?.users;
 
     const handleClick = (id) => {
@@ -29,6 +31,18 @@ const ChooseMaster = () => {
         <>
             <Header/>
             <CContainer className="choose-master-page main-content page mb-5">
+                <CRow className="mb-4">
+                    <CCol>
+                        <h2 className="text-center tg-text">{company?.name}</h2>
+                        <p className="text-center fs-5 tg-text">
+                            {company?.address?.address_1}, {company?.address?.city}, {company?.address?.postal_code}, {company?.address?.meta?.google_country_name}&nbsp; 
+                            <a className="tg-text" href={`https://www.google.com/maps/search/?api=1&query=${company?.address?.position?.lat},${company?.address?.position?.lng}`} target="_blank" rel="noopener noreferrer">Карта</a>
+                        </p>
+                        <p className="text-center fs-5 tg-text">
+                            <a className="tg-text"href={`tel:${company?.profile?.phone_formatted?.international}`} rel="noopener noreferrer">{company?.profile?.phone_formatted?.international}</a>
+                        </p>
+                    </CCol>
+                </CRow>
                 <CAccordion style={vars} activeItemKey={currMasterId || searchParams.get('masterId')}>
                     {users?.length && users.map(user => {
                         // const products = user?.products.filter(product => product?.name.toLowerCase().includes('стрижка'));
@@ -43,7 +57,7 @@ const ChooseMaster = () => {
                         });
 
                         return (
-                            <MasterCard 
+                            <MasterWithServiceCard 
                                 key={user?.id} 
                                 user={user} 
                                 services={products} 

@@ -1,0 +1,13 @@
+.master-card {
+    border: unset;
+    transition: background-color 0.15s ease-in-out;
+}
+
+.master-product-card.active .card-body {
+    border: 1px solid #000000;
+}
+
+.master-product-card {
+    padding-right: 0;
+    padding-left: 0;
+}

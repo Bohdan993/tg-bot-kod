@@ -23,7 +23,7 @@ const ChooseCity = () => {
         <CContainer className="choose-city-page main-content page">
             <CRow className="mt-5 mb-4">
                 <CCol className='text-center'>
-                    <h1>
+                    <h1 className="tg-text">
                         Оберіть місто
                     </h1>
                 </CCol>
@@ -32,11 +32,10 @@ const ChooseCity = () => {
                 <CCol>
                     <CRow>
                         <CCol>
-                            <p className="fw-semibold">Локації</p>
+                            <p className="fw-semibold tg-text">Локації</p>
                         </CCol>
                     </CRow>
                     {companyBranches?.length && companyBranches.map(company => {
-                        console.log(company);
                         return (
                             <CRow className="mb-4" key={company?.id}>
                                 <CCol>
