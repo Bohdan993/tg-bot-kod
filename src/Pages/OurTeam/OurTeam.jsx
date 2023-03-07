@@ -1,47 +1,42 @@
-import {useEffect, useMemo, useState } from "react";
+import {useEffect, useState } from "react";
 import { getMasterFreeDate } from "../../API";
-import { useSelector } from "react-redux";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import {CContainer, CRow, CCol} from '@coreui/react';
 import { Header } from "../../Components/Header";
 import {MasterPopup} from "../../Components/MasterPopup";
 import { MasterCard } from "../../Components/MasterCard";
 import { user as userImg} from "../../Constants/images";
 import { useFirstRender } from "../../Utils/CustomHooks/useFirstRender";
+import { setSelectedMasterId } from "../../Slices/master";
+import { setStartDate } from "../../Slices/date";
 import { Loader } from "../../Components/Loader";
 import { Footer } from "../../Components/Footer";
+import { withPageGuard } from "../../HOC/withPageGuard";
 import './OurTeam.css';
 
 
 
-
 const OurTeam = () => {
-    const navigate = useNavigate();
-    const [searchParams, setSearchParams] = useSearchParams();
-    const {companyId} = useParams();
-    const isFirstRender = useFirstRender();
-    const masterId = searchParams.get('masterId');
-    const serviceId = searchParams.get('serviceId');
-    const relatedServicesIds = searchParams.get('relatedId');
+    const dispatch = useDispatch();
     const [time,setTime] = useState(null);
     const [date,setDate] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [activeMaster, setActiveMaster] = useState(masterId);
     const [popupText, setPopupText] = useState({title: '', text: ''});
-    const company = useSelector(state => state.app.info?.branches?.find(el => String(el.id) === String(companyId)));
-    const master = useMemo(() => company?.users?.find(user => Number(user?.id) === Number(masterId)), []);
+    const isFirstRender = useFirstRender();
+    const companyId = useSelector(state => state.company.activeCompany?.id);
+    const masterId = useSelector(state => state.master.selectedMasterId);
+    const [activeMaster, setActiveMaster] = useState(masterId);
+    const serviceId = useSelector(state => state.service.activeService?.id);
+    const relatedServicesIds = useSelector(state => state.service.activeRelatedServices?.map(service => service?.id)?.join('_'));
 
+    const company = useSelector(state => state.company.activeCompany);
+    const master  = useSelector(state => state.master.activeMaster);
 
     const handleClick = (master) => {
         setActiveMaster(master?.id);
     }
 
     useEffect(()=>{
-        if(!master) {
-            navigate(`/masters/${companyId}`);
-            return;
-        }
-
         const fetch = async () => {
             setLoading(true);
             const result = await getMasterFreeDate({
@@ -56,9 +51,11 @@ const OurTeam = () => {
             (date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1));
             setDate(transformedDate);
             setTime(time);
-            setSearchParams(`masterId=${activeMaster}&serviceId=${serviceId}${relatedServicesIds?.length ? "&relatedId=" + relatedServicesIds : ""}&startDate=${transformedDate}`);
+            dispatch(setSelectedMasterId(activeMaster));
+            dispatch(setStartDate(transformedDate));
             setLoading(false);
         }
+
         fetch();
     }, []);
 
@@ -77,7 +74,8 @@ const OurTeam = () => {
             return;
         }
 
-        setSearchParams(`masterId=${activeMaster}&serviceId=${serviceId}${relatedServicesIds?.length ? "&relatedId=" + relatedServicesIds : ""}&startDate=${activeMaster === 0 ? null : date}`);
+        dispatch(setSelectedMasterId(activeMaster));
+        dispatch(setStartDate(activeMaster === 0 ? null : date));
     }, [activeMaster]);
 
 
@@ -88,7 +86,7 @@ const OurTeam = () => {
     return (
         <>
             <Header/>
-            <CContainer className="related-services-page main-content page mb-5">
+            <CContainer className="our-team-page main-content page mb-5">
                 <CRow className="mb-4">
                     <CCol>
                         <h2 className="text-center tg-text">Наша команда</h2>
@@ -135,4 +133,4 @@ const OurTeam = () => {
     );
 };
 
-export default OurTeam;
+export default withPageGuard(OurTeam);

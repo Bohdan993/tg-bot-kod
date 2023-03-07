@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import { useSelector } from "react-redux";
-import { useParams, useSearchParams } from 'react-router-dom';
 import {CContainer, CAccordion, CRow, CCol} from '@coreui/react';
 import { MasterWithServiceCard } from '../../Components/MasterWithServiceCard';
 import { ServicesPopup } from '../../Components/ServicesPopup';
 import { Header } from "../../Components/Header";
+import { withPageGuard } from '../../HOC/withPageGuard';
 import './ChooseMaster.css';
 
 
@@ -18,15 +18,15 @@ const vars = {
 }
 
 const ChooseMaster = () => {
-    const [searchParams, _] = useSearchParams();
     const [currMasterId, setCurrMasterId] = useState(null);
-    const { companyId } = useParams();
-    const company = useSelector(state => state.app.info?.branches?.find(el => String(el.id) === String(companyId)));
+    const masterId = useSelector(state => state.master.activeMaster?.id);
+    const company = useSelector(state => state.company.activeCompany);
     const users = company?.users;
 
     const handleClick = (id) => {
         setCurrMasterId(id);
     }
+
     return (
         <>
             <Header/>
@@ -43,7 +43,7 @@ const ChooseMaster = () => {
                         </p>
                     </CCol>
                 </CRow>
-                <CAccordion style={vars} activeItemKey={currMasterId || searchParams.get('masterId')}>
+                <CAccordion style={vars} activeItemKey={currMasterId || String(masterId)}>
                     {users?.length && users.map(user => {
                         const seen = {};
                         const products = user?.products.filter(product => {
@@ -73,4 +73,4 @@ const ChooseMaster = () => {
     );
 };
 
-export default ChooseMaster;
+export default withPageGuard(ChooseMaster);

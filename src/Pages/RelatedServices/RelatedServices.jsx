@@ -3,31 +3,31 @@ import { useDispatch, useSelector } from 'react-redux';
 import {CContainer,CRow, CCol} from '@coreui/react';
 import { findRelatedServices } from '../../Utils/findRelatedServices';
 import { Header } from "../../Components/Header";
-import { useParams, useSearchParams } from 'react-router-dom';
 import { ServiceCard } from '../../Components/ServiceCard';
 import { ServicesPopup } from '../../Components/ServicesPopup';
-import { setActiveRelatedServices } from '../../Slices/app';
+import { setActiveRelatedServices } from '../../Slices/service';
 import { ReactComponent as CashIcon } from '../../Images/cash.svg'
 import { ReactComponent as TimeIcon } from '../../Images/time.svg'
 import { useFirstRender } from '../../Utils/CustomHooks/useFirstRender';
+import { withPageGuard } from '../../HOC/withPageGuard';
 import './RelatedServices.css';
+
+
 
 
 const RelatedServices = () => {
     const dispatch = useDispatch();
     const isFirstRender = useFirstRender();
-    const {companyId} = useParams();
-    const [searchParams, setSearchParams] = useSearchParams();
-    const masterId = searchParams.get('masterId');
-    const serviceId = searchParams.get('serviceId');
-    const relatedId = searchParams.get('relatedId');
-    const currCompanyBranchServices = useSelector(state => state.app.info.branches?.find(branch => Number(branch?.id) === Number(companyId))?.attached_products);
-    const service = currCompanyBranchServices?.find(service => Number(service?.id) === Number(serviceId));
+    const masterId = useSelector(state => state.master.activeMaster?.id);
+    const serviceId = useSelector(state => state.service.activeService?.id);
+    const relatedId = useSelector(state => state.service.activeRelatedServices?.map(service => service?.id)?.join('_'));
     const services = useSelector(state => state.app.info?.products);
-    const branch = useSelector(state => state.app.info?.branches?.find(branch => Number(branch.id) === Number(companyId)));
-    const master  = useSelector(state => state.app.info.branches?.find(branch => Number(branch?.id) === Number(companyId))?.users?.find(user => Number(user?.id) === Number(masterId)));
-    const relatedServices = findRelatedServices(Number(serviceId), services, branch).filter(Boolean);
-    const [activeServices, setActiveServices] = useState(relatedServices.map(() => false));
+    const company = useSelector(state => state.company.activeCompany);
+    const master  = useSelector(state => state.master.activeMaster);
+    const service = useSelector(state => state.service.activeService);
+
+    const relatedServices = findRelatedServices(Number(serviceId), services, company)?.filter(Boolean);
+    const [activeServices, setActiveServices] = useState(relatedServices?.map(() => false));
 
     const handleClick = (index) => {
         setActiveServices(prev => {
@@ -38,24 +38,8 @@ const RelatedServices = () => {
     }
 
     useEffect(()=>{
-
-            if(isFirstRender) {
-                return;
-            }
-
-            const activeRelatedServicesIds = relatedServices.filter((_, ind) => {
-                return activeServices[ind];
-            }).map(service => service?.id);
-    
-            const activeRelatedServicesIdsString = activeRelatedServicesIds.join("_");
-            setSearchParams(`masterId=${masterId}&serviceId=${serviceId}${activeRelatedServicesIds?.length ? '&relatedId=' + activeRelatedServicesIdsString : ''}`);
-            dispatch(setActiveRelatedServices(activeRelatedServicesIdsString || null));
-
-    }, [activeServices]);
-
-    useEffect(()=>{
         if(relatedId) {
-            setActiveServices(prev => {
+            setActiveServices(() => {
                 const newArr = relatedServices.map(el => {
                     if(relatedId.includes(String(el?.id))) {
                         return true;
@@ -67,6 +51,16 @@ const RelatedServices = () => {
             });
         }
     }, []);
+
+    useEffect(()=>{
+            if(isFirstRender) {
+                return;
+            }
+            const activeRelatedServices = relatedServices.filter((_, ind) => activeServices[ind]);
+            dispatch(setActiveRelatedServices(activeRelatedServices || null));
+    }, [activeServices]);
+
+
 
     return (
         <>
@@ -112,4 +106,4 @@ const RelatedServices = () => {
     );
 };
 
-export default RelatedServices;
+export default withPageGuard(RelatedServices);

@@ -1,12 +1,10 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import { images } from '../../Constants/images';
+import { useSelector } from 'react-redux';
 import {CContainer,CRow,CCol,CCarousel,CCarouselItem,CImage} from '@coreui/react';
 import './Header.css';
-import { images } from '../../Constants/images';
 
 const Header = () => {
-    // const companyId = useSelector(state => state.app.activeBranchId);
-    const { companyId } = useParams();
+    const companyId = useSelector(state => state.company.activeCompany?.id);
     const currImages = images[companyId];
 
     return (

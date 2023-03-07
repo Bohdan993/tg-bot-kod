@@ -1,37 +1,30 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {CContainer,CRow,CCol,CAccordionItem, CAccordionHeader, CAccordionBody} from '@coreui/react';
-import { setActiveMaster, setActiveService, setActiveRelatedServices } from '../../Slices/app';
-import { useDispatch } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { ServiceCard } from '../ServiceCard';
 import { MasterCard } from '../MasterCard';
+import { setActiveMaster } from '../../Slices/master';
+import { setActiveRelatedServices, setActiveService } from '../../Slices/service';
 import './MasterWithServiceCard.css';
 
 
 
-
 const MasterWithServiceCard = ({user, services, itemKey, handleClick: clickHandler}) => {
-    const [activeService, setActiveService] = useState(null);
-    const [searchParams, setSearchParams] = useSearchParams();
     const dispatch = useDispatch();
-    const masterId = searchParams.get('masterId');
-    const serviceId = searchParams.get('serviceId');
+    const [activeService, updateActiveService] = useState(null);
+    const masterId = useSelector(state => state.master.activeMaster?.id);
+    const serviceId = useSelector(state => state.service.activeService?.id);
 
-    const handleClick = (index, service, user) => {
-        setSearchParams(`masterId=${user?.id}&serviceId=${service?.id}`);
+    const handleClick = (_, service, user) => {
         clickHandler(user?.id);
-       
-        setActiveService(service?.id);
-        
+        updateActiveService(service?.id);
         dispatch(setActiveMaster(user));
-
         dispatch(setActiveService(service));
         dispatch(setActiveRelatedServices(null));
-        
     }
 
     const handleAccordionClick = (e) => {
-        setActiveService(null);
+        updateActiveService(null);
     }
 
     return (
@@ -51,15 +44,15 @@ const MasterWithServiceCard = ({user, services, itemKey, handleClick: clickHandl
             <CAccordionBody>
             {services?.length && services.map((service, ind) => {
                 const active = (activeService === service?.id || 
-                    (masterId === String(user?.id) && serviceId === String(service?.id))) ? 
+                    (String(masterId) === String(user?.id) && String(serviceId) === String(service?.id))) ? 
                     true : 
                     false;
                 return (
                     <ServiceCard
                         key={service?.id}
                         service={service}
-                        ind={ind}
                         active={active}
+                        ind={ind}
                         user={user}
                         handleClick={handleClick}
                     />

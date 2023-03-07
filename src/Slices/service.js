@@ -19,7 +19,7 @@ export const slice = createSlice({
       state,
       action
     ){
-      state.activeService = action.payload;
+      state.activeRelatedServices = action.payload;
     }
   }
 });

@@ -9,9 +9,9 @@ import { MainLayout } from './Components/MainLayout';
 import { RelatedServices } from './Pages/RelatedServices';
 import { OurTeam } from './Pages/OurTeam';
 import { ChooseDate } from './Pages/ChooseDate';
+import { Order } from './Pages/Order';
 import { Loader } from './Components/Loader';
 import './App.css';
-
 
 
 
@@ -44,8 +44,9 @@ function App() {
         <Route path="/" element={<MainLayout />}>
           {/* <Route path={`/${ROUTES['employment']}`} element={<ChooseMaster />} /> */}
           <Route path="about/:companyId" element={<About />} />
-          <Route path="masters/:companyId" element={<ChooseMaster />} />
+          <Route path="masters/:companyId" element={<ChooseMaster/>} />
           <Route path="related-services/:companyId" element={<RelatedServices/>}/>
+          <Route path="order/:companyId" element={<Order/>}/>
         </Route>
         <Route path="our-team/:companyId" element={<OurTeam/>}/>
         <Route path="date/:companyId" element={<ChooseDate/>}/>

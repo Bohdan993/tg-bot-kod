@@ -1,6 +1,6 @@
+import {CContainer,CRow,CCol,CCard,CCardBody,CCardTitle} from '@coreui/react';
 import { ReactComponent as CashIcon } from '../../Images/cash.svg'
 import { ReactComponent as TimeIcon } from '../../Images/time.svg'
-import {CContainer,CRow,CCol,CCard,CCardBody,CCardTitle} from '@coreui/react';
 import './ServiceCard.css';
 
 const ServiceCard = ({service, user, ind, handleClick, active = false}) => {

@@ -1,22 +1,20 @@
-import React from 'react';
 import {COffcanvas,COffcanvasBody,CContainer,CButton} from '@coreui/react';
-import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './MasterPopup.css';
+
+
+
 
 
 const MasterPopup = ({title, text}) => {
     const location = useLocation();
     const navigate = useNavigate();
-    const [searchParams, _] = useSearchParams();
-    const { companyId } = useParams();
-    const masterId = searchParams.get('masterId');
-    const serviceId = searchParams.get('serviceId');
-    const relatedServicesIds = searchParams.get('relatedId');
-    const startDate = searchParams.get('startDate');
+    const companyId = useSelector(state => state.company.activeCompany?.id);
 
     const handleClick = (e) => {
       if(location.pathname.includes('our-team')) {
-        navigate(`/date/${companyId}?masterId=${masterId}&serviceId=${serviceId}${relatedServicesIds ? '&relatedId=' + relatedServicesIds : ''}&startDate=${startDate}`);
+        navigate(`/date/${companyId}`);
         return;
       }
     }

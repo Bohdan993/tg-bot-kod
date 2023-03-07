@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import Calendar from 'react-calendar';
-import { useParams, useSearchParams } from 'react-router-dom';
-import { transformDate } from '../../Utils/transformDate';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {CContainer, CRow, CCol, CButton} from '@coreui/react';
+import Calendar from 'react-calendar';
 import { Header } from "../../Components/Header";
 import { Footer } from "../../Components/Footer";
-import { getFreeDates } from '../../API';
 import { Loader } from "../../Components/Loader";
 import { ServicesPopup } from '../../Components/ServicesPopup';
+import { setSelectedDate, setSelectedTime } from '../../Slices/date';
+import { withPageGuard } from '../../HOC/withPageGuard';
+import { getFreeDates } from '../../API';
+import { transformDate } from '../../Utils/transformDate';
 import './ChooseDate.css';
 
 
@@ -15,19 +17,19 @@ const PERIOD = 30;
 
 
 const ChooseDate = () => {
+    const dispatch = useDispatch();
     const [value, onChange] = useState(new Date());
-    const [searchParams, _] = useSearchParams();
-    const {companyId} = useParams();
-    const masterId = searchParams.get('masterId');
-    const serviceId = searchParams.get('serviceId');
-    const relatedServicesIds = searchParams.get('relatedId');
-    const startDate = searchParams.get('startDate');
+    const companyId = useSelector(state => state.company.activeCompany?.id);
+    const masterId = useSelector(state => state.master.selectedMasterId);
+    const serviceId = useSelector(state => state.service.activeService?.id);
+    const relatedServicesIds = useSelector(state => state.service.activeRelatedServices?.map(service => service?.id)?.join('_'));
+    const startDate = useSelector(state => state.date.startDate);
     const [loading, setLoading] = useState(false);
     const [availableDays, setAvailableDays] = useState(null);
     const [availableSpots, setAvailableSpots] = useState(null);
     const [activeSpot, setActiveSpot] = useState(null);
 
-    let start = startDate === 'null' ? transformDate(new Date()) : transformDate(startDate);
+    let start = !startDate ? transformDate(new Date()) : transformDate(startDate);
     let end = new Date(start);
     end.setDate(end.getDate() + PERIOD);
     end = transformDate(end);
@@ -40,7 +42,8 @@ const ChooseDate = () => {
     }
 
     const handleClick = (spot) => {
-        setActiveSpot(spot?.start + '-' +spot?.end);
+        const spotValue = spot?.start + '-' +spot?.end;
+        setActiveSpot(spotValue);
     }
 
     useEffect(()=>{
@@ -55,7 +58,8 @@ const ChooseDate = () => {
                 companyId
             });
             setAvailableDays(result?.days);
-            onChange(new Date(result?.days[0]?.date));
+            const dateValue = new Date(result?.days[0]?.date);
+            onChange(dateValue);
             const spotValue = result?.days[0]?.spots?.[0]?.start + '-' + result?.days[0]?.spots?.[0]?.end;
             setActiveSpot(spotValue);
             setLoading(false);
@@ -78,7 +82,12 @@ const ChooseDate = () => {
                 return spotValue;
             });
         }
-    }, [value]);
+        dispatch(setSelectedDate(transformDate(value)));
+    }, [value, availableDays, dispatch]);
+
+    useEffect(()=>{
+        dispatch(setSelectedTime(activeSpot));
+    }, [activeSpot, dispatch])
 
     if(loading) {
         return <Loader w={75} h={75} className="loader" style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}/>
@@ -128,4 +137,4 @@ const ChooseDate = () => {
     );
 };
 
-export default ChooseDate;
+export default withPageGuard(ChooseDate);

@@ -1,5 +1,5 @@
 import {CContainer,CRow,CCol} from '@coreui/react';
-import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as AboutIcon } from '../../Images/about.svg'
 import { ReactComponent as FilialsIcon } from '../../Images/filials.svg'
 import { ReactComponent as SessionIcon } from '../../Images/session.svg'
@@ -9,18 +9,11 @@ import './Footer.css';
 
 
 const Footer = () => {
-    const { companyId } = useParams();
-    const [searchParams, _] = useSearchParams();
     const navigate = useNavigate();
-    const masterId = useSelector(state => state.app.activeMaster?.id) || searchParams.get('masterId');
-    const serviceId = useSelector(state => state.app.activeService?.id) || searchParams.get('serviceId');
+    const companyId = useSelector(state => state.company.activeCompany?.id);
 
     const handleClick = (e) => {
-        if(masterId && serviceId) {
-            navigate(`/masters/${companyId}?masterId=${masterId}&serviceId=${serviceId}`);
-        } else {
-            navigate(`/masters/${companyId}`);
-        }
+        navigate(`/masters/${companyId}`);
     }
     
     return (

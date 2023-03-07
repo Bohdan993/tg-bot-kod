@@ -1,24 +1,22 @@
 import {COffcanvas,COffcanvasHeader,COffcanvasBody,COffcanvasTitle,CContainer,CButton} from '@coreui/react';
 import { useSelector } from 'react-redux';
-import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ReactComponent as CashIcon } from '../../Images/cash.svg'
 import { ReactComponent as TimeIcon } from '../../Images/time.svg'
 import { findRelatedServices } from '../../Utils/findRelatedServices';
 import './ServicesPopup.css';
 
 
+
 const ServicesPopup = () => {
   const location = useLocation();
-  const [searchParams, _] = useSearchParams();
   const navigate = useNavigate();
-  const { companyId } = useParams();
-  const masterId = searchParams.get('masterId');
-  const serviceId = searchParams.get('serviceId');
-  const relatedServicesIds = searchParams.get('relatedId');
+  const companyId = useSelector(state => state.company.activeCompany?.id);
+  const serviceId = useSelector(state => state.service.activeService?.id);
+  const relatedServicesIds = useSelector(state => state.service.activeRelatedServices?.map(service => service?.id));
   const currCompanyBranchServices = useSelector(state => state.app.info.branches?.find(branch => Number(branch?.id) === Number(companyId))?.attached_products);
   const service = currCompanyBranchServices?.find(service => Number(service?.id) === Number(serviceId));
-  const activeRelatedServices = useSelector(state => state.app.activeRelatedServices);
-  const relatedServices = relatedServicesIds?.split('_')?.map(id => currCompanyBranchServices?.find(service => Number(service?.id) === Number(id)));
+  const relatedServices = relatedServicesIds?.map(id => currCompanyBranchServices?.find(service => Number(service?.id) === Number(id)));
   
   const services = useSelector(state => state.app.info?.products);
   const branches = useSelector(state => state.app.info?.branches);
@@ -27,18 +25,22 @@ const ServicesPopup = () => {
   const handleClick = (e) => {
     if(location.pathname.includes('masters')) {
       if(possibleRelatedServices?.length) {
-        navigate(`/related-services/${companyId}?masterId=${masterId}&serviceId=${serviceId}${activeRelatedServices ? '&relatedId=' + activeRelatedServices : ''}`);
+        navigate(`/related-services/${companyId}`);
       } else {
-        navigate(`/our-team/${companyId}?masterId=${masterId}&serviceId=${serviceId}`);
+        navigate(`/our-team/${companyId}`);
       }
       return;
     }
 
     if(location.pathname.includes('related-services')) {
-      navigate(`/our-team/${companyId}?masterId=${masterId}&serviceId=${serviceId}${relatedServicesIds ? '&relatedId=' + relatedServicesIds : ''}`);
+      navigate(`/our-team/${companyId}`);
       return;
     }
 
+    if(location.pathname.includes('date')) {
+      navigate(`/order/${companyId}`);
+      return;
+    }
   }
 
     return (

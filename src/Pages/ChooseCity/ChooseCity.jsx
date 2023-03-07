@@ -1,28 +1,26 @@
 import {CContainer,CRow,CCol,CCard,CCardImage,CCardBody,CCardTitle,CCardText} from '@coreui/react';
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setCompanyId } from '../../Slices/app';
+import { setActiveCompany } from '../../Slices/company';
+
 import './ChooseCity.css';
-
-
 
 const ChooseCity = () => {
     const navigate = useNavigate();
-    const companyId = useSelector(state => state.app.activeBranchId);
-    const masterId = useSelector(state => state.app.activeMaster?.id);
-    const serviceId = useSelector(state => state.app.activeService?.id);
-    const companyBranches = useSelector(state => state.app.info)?.branches;
+    const companyId = useSelector(state => state.company.activeCompany?.id);
+    const masterId = useSelector(state => state.master.activeMaster?.id);
+    const serviceId = useSelector(state => state.service.activeService?.id);
+    const companyBranches = useSelector(state => state.app.info?.branches);
     const dispatch = useDispatch();
 
-    const handleClick = (company, e) => {
-
+    const handleClick = (company) => {
         if(String(companyId) === String(company?.id) && masterId && serviceId) {
-            navigate(`/masters/${companyId}?masterId=${masterId}&serviceId=${serviceId}`);
+            navigate(`/masters/${companyId}`);
         } else {
             navigate(`/masters/${company?.id}`);
         }
 
-        dispatch(setCompanyId(company?.id));
+        dispatch(setActiveCompany(company));
     }
 
     return (
