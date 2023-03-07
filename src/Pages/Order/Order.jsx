@@ -61,7 +61,7 @@ const Order = () => {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(tg?.initDataUnsafe?.user)
+            body: JSON.stringify({user: tg?.initDataUnsafe?.user})
         });
 
         console.log(result);
