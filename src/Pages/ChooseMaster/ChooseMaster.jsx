@@ -45,7 +45,6 @@ const ChooseMaster = () => {
                 </CRow>
                 <CAccordion style={vars} activeItemKey={currMasterId || searchParams.get('masterId')}>
                     {users?.length && users.map(user => {
-                        // const products = user?.products.filter(product => product?.name.toLowerCase().includes('стрижка'));
                         const seen = {};
                         const products = user?.products.filter(product => {
                             let key = product?.name.toLowerCase();

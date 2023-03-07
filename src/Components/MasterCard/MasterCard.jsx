@@ -1,27 +1,11 @@
 import React from 'react';
 import {CCard,CCardImage,CCardBody,CCardTitle,CCardText, CContainer, CRow, CCol} from '@coreui/react';
-import { Oval } from 'react-loader-spinner';
 import './MasterCard.css';
 
-const Loader = () => {
-    return (
-        <Oval
-            height={15}
-            width={15}
-            wrapperStyle={{}}
-            wrapperClass="loader"
-            visible={true}
-            ariaLabel='oval-loading'
-            strokeWidth={5}
-            strokeWidthSecondary={5}
-            color="black"
-            secondaryColor='black'
 
-        />        
-    )
-}
 
-const MasterCard = ({user, services = [], className = '', extended = false, date = '', time = '', info = '', loading = false, active = false, handleClick = () => {}}) => {
+
+const MasterCard = ({user, services = [], className = '', extended = false, date = '', time = '', info = '', active = false, handleClick = () => {}}) => {
     return (
         <CContainer 
             className={`master-card ${active ? "active": ""}`}
@@ -44,7 +28,7 @@ const MasterCard = ({user, services = [], className = '', extended = false, date
                                         </CCardText>
                                     ) : (
                                         <div>
-                                            {loading ? (<Loader/>) : (<>{user?.position} &#9679; {date && time && `Доступний з ${date} в ${time}`}</>)}    
+                                            {user?.position} &#9679; {date && time && `Доступний з ${date} в ${time}`}    
                                         </div>
                                     )
                                     }

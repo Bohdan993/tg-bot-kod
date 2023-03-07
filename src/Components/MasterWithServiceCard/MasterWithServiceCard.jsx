@@ -11,7 +11,7 @@ import './MasterWithServiceCard.css';
 
 
 const MasterWithServiceCard = ({user, services, itemKey, handleClick: clickHandler}) => {
-    const [activeServices, setActiveServices] = useState(services.map(() => false));
+    const [activeService, setActiveService] = useState(null);
     const [searchParams, setSearchParams] = useSearchParams();
     const dispatch = useDispatch();
     const masterId = searchParams.get('masterId');
@@ -21,11 +21,7 @@ const MasterWithServiceCard = ({user, services, itemKey, handleClick: clickHandl
         setSearchParams(`masterId=${user?.id}&serviceId=${service?.id}`);
         clickHandler(user?.id);
        
-        setActiveServices(prev => {
-            const newArr = prev.map(() => false);
-            newArr[index] = true;
-            return newArr;
-        });
+        setActiveService(service?.id);
         
         dispatch(setActiveMaster(user));
 
@@ -35,7 +31,7 @@ const MasterWithServiceCard = ({user, services, itemKey, handleClick: clickHandl
     }
 
     const handleAccordionClick = (e) => {
-        setActiveServices(prev=>prev.map(() => false));
+        setActiveService(null);
     }
 
     return (
@@ -54,7 +50,7 @@ const MasterWithServiceCard = ({user, services, itemKey, handleClick: clickHandl
             </CAccordionHeader>
             <CAccordionBody>
             {services?.length && services.map((service, ind) => {
-                const active = (activeServices[ind] || 
+                const active = (activeService === service?.id || 
                     (masterId === String(user?.id) && serviceId === String(service?.id))) ? 
                     true : 
                     false;

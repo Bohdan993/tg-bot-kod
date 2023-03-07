@@ -1,7 +1,7 @@
 import React from 'react';
 import {COffcanvas,COffcanvasBody,CContainer,CButton} from '@coreui/react';
-import './MasterPopup.css';
 import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import './MasterPopup.css';
 
 
 const MasterPopup = ({title, text}) => {
@@ -12,13 +12,15 @@ const MasterPopup = ({title, text}) => {
     const masterId = searchParams.get('masterId');
     const serviceId = searchParams.get('serviceId');
     const relatedServicesIds = searchParams.get('relatedId');
+    const startDate = searchParams.get('startDate');
 
     const handleClick = (e) => {
       if(location.pathname.includes('our-team')) {
-        navigate(`/date/${companyId}?masterId=${masterId}&serviceId=${serviceId}${relatedServicesIds ? '&relatedId=' + relatedServicesIds : ''}`);
+        navigate(`/date/${companyId}?masterId=${masterId}&serviceId=${serviceId}${relatedServicesIds ? '&relatedId=' + relatedServicesIds : ''}&startDate=${startDate}`);
         return;
       }
     }
+    
     return (
         <COffcanvas className="custom-offcanvas choosen-services" placement="bottom" visible={true} backdrop={false} scroll={true}>
             <COffcanvasBody className="d-flex">

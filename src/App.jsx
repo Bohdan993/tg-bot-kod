@@ -9,8 +9,10 @@ import { MainLayout } from './Components/MainLayout';
 import { RelatedServices } from './Pages/RelatedServices';
 import { OurTeam } from './Pages/OurTeam';
 import { ChooseDate } from './Pages/ChooseDate';
-import { Oval } from 'react-loader-spinner';
+import { Loader } from './Components/Loader';
 import './App.css';
+
+
 
 
 const tg = window.Telegram.WebApp;
@@ -28,17 +30,7 @@ function App() {
 
   if(isLoading) {
     return (
-      <Oval
-        height={75}
-        width={75}
-        wrapperStyle={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}
-        wrapperClass="preloader"
-        visible={true}
-        ariaLabel='oval-loading'
-        strokeWidth={5}
-        strokeWidthSecondary={5}
-
-      />
+      <Loader w={75} h={75} className="preloader" style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}/>
     )
   }
 
@@ -54,9 +46,9 @@ function App() {
           <Route path="about/:companyId" element={<About />} />
           <Route path="masters/:companyId" element={<ChooseMaster />} />
           <Route path="related-services/:companyId" element={<RelatedServices/>}/>
-          <Route path="our-team/:companyId" element={<OurTeam/>}/>
-          <Route path="date/:companyId" element={<ChooseDate/>}/>
         </Route>
+        <Route path="our-team/:companyId" element={<OurTeam/>}/>
+        <Route path="date/:companyId" element={<ChooseDate/>}/>
       </Routes>
   );
 }
