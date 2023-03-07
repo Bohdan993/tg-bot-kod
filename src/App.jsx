@@ -27,6 +27,7 @@ function App() {
     dispatch(getBaseData());
   }, [dispatch]);
 
+  console.log(tg);
 
   if(isLoading) {
     return (

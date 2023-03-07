@@ -19,15 +19,15 @@ const PERIOD = 30;
 const ChooseDate = () => {
     const dispatch = useDispatch();
     const [value, onChange] = useState(new Date());
+    const [loading, setLoading] = useState(true);
+    const [availableDays, setAvailableDays] = useState(null);
+    const [availableSpots, setAvailableSpots] = useState(null);
+    const [activeSpot, setActiveSpot] = useState(null);
     const companyId = useSelector(state => state.company.activeCompany?.id);
     const masterId = useSelector(state => state.master.selectedMasterId);
     const serviceId = useSelector(state => state.service.activeService?.id);
     const relatedServicesIds = useSelector(state => state.service.activeRelatedServices?.map(service => service?.id)?.join('_'));
     const startDate = useSelector(state => state.date.startDate);
-    const [loading, setLoading] = useState(false);
-    const [availableDays, setAvailableDays] = useState(null);
-    const [availableSpots, setAvailableSpots] = useState(null);
-    const [activeSpot, setActiveSpot] = useState(null);
 
     let start = !startDate ? transformDate(new Date()) : transformDate(startDate);
     let end = new Date(start);
