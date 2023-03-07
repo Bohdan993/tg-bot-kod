@@ -22,7 +22,16 @@ const ServicesPopup = () => {
   const branches = useSelector(state => state.app.info?.branches);
   const possibleRelatedServices = findRelatedServices(Number(serviceId), services, branches?.find(branch => Number(branch.id) === Number(companyId)));
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
+    // console.log(location.pathname);
+    const result =  await fetch("https://webhook.site/f8718d1e-334a-4f35-b35a-fdb3ffe79ec6", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({pathname: location.pathname})
+    });
+    console.log(result);
     if(location.pathname.includes('masters')) {
       if(possibleRelatedServices?.length) {
         navigate(`/related-services/${companyId}`);
@@ -41,6 +50,8 @@ const ServicesPopup = () => {
       navigate(`/order/${companyId}`);
       return;
     }
+
+    
   }
 
     return (
