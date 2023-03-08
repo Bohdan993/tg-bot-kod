@@ -2,14 +2,12 @@ import {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {CContainer,CRow, CCol} from '@coreui/react';
 import { findRelatedServices } from '../../Utils/findRelatedServices';
-import { Header } from "../../Components/Header";
 import { ServiceCard } from '../../Components/ServiceCard';
 import { ServicesPopup } from '../../Components/ServicesPopup';
 import { setActiveRelatedServices } from '../../Slices/service';
 import { ReactComponent as CashIcon } from '../../Images/cash.svg'
 import { ReactComponent as TimeIcon } from '../../Images/time.svg'
 import { useFirstRender } from '../../Utils/CustomHooks/useFirstRender';
-import { withPageGuard } from '../../HOC/withPageGuard';
 import './RelatedServices.css';
 
 
@@ -60,11 +58,8 @@ const RelatedServices = () => {
             dispatch(setActiveRelatedServices(activeRelatedServices || null));
     }, [activeServices]);
 
-
-
     return (
         <>
-            <Header/>
             <CContainer className="related-services-page main-content page mb-5">
                 <CContainer className="p-0">
                     <CRow className="mb-4" key={service?.id}>
@@ -75,7 +70,7 @@ const RelatedServices = () => {
                                     {service?.duration} хв.
                                 </p>
                                 <p className="d-flex align-items-center flex-nowrap"><CashIcon className="me-2"/>
-                                    {service?.price_amount} грн.
+                                    {service?.base_price/100 || service?.price/100} грн.
                                 </p>
                             </CContainer>
                             <p className="text-center fs-5 tg-text">
@@ -106,4 +101,4 @@ const RelatedServices = () => {
     );
 };
 
-export default withPageGuard(RelatedServices);
+export default RelatedServices;

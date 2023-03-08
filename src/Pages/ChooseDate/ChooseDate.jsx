@@ -2,12 +2,11 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {CContainer, CRow, CCol, CButton} from '@coreui/react';
 import Calendar from 'react-calendar';
+import { Loader } from "../../Components/Loader";
 import { Header } from "../../Components/Header";
 import { Footer } from "../../Components/Footer";
-import { Loader } from "../../Components/Loader";
 import { ServicesPopup } from '../../Components/ServicesPopup';
 import { setSelectedDate, setSelectedTime } from '../../Slices/date';
-import { withPageGuard } from '../../HOC/withPageGuard';
 import { getFreeDates } from '../../API';
 import { transformDate } from '../../Utils/transformDate';
 import './ChooseDate.css';
@@ -90,7 +89,7 @@ const ChooseDate = () => {
     }, [activeSpot, dispatch])
 
     if(loading) {
-        return <Loader w={75} h={75} className="loader" style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}/>
+        return <Loader w={75} h={75} className="preloader" style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}/>
     }
 
     return (
@@ -137,4 +136,4 @@ const ChooseDate = () => {
     );
 };
 
-export default withPageGuard(ChooseDate);
+export default ChooseDate;

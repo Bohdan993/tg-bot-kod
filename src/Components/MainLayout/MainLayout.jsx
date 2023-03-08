@@ -5,15 +5,19 @@ import {
     Outlet
  } from "react-router-dom";
 import { withPageGuard } from "../../HOC/withPageGuard";
+import {Header} from '../Header';
 import { Footer } from "../Footer";
 import './MainLayout.css';
+
+
  const MainLayout = () => {
  
     return (
        <CContainer fluid>
-        <Outlet />
-        <Footer />
+         <Header/>
+         <Outlet />
+         <Footer />
        </CContainer>
     )
  }
- export default MainLayout;
+ export default withPageGuard(MainLayout);

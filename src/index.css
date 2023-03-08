@@ -119,3 +119,7 @@ body {
 .react-calendar__tile--active,.react-calendar__tile--active:enabled:hover, .react-calendar__tile--active:enabled:focus {
   background-color: #000000;
 }
+
+.form-control:focus {
+  box-shadow: 0 0 0 0.25rem rgba(0,0,0,0.25);
+}

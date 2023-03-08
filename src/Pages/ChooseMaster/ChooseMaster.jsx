@@ -3,8 +3,6 @@ import { useSelector } from "react-redux";
 import {CContainer, CAccordion, CRow, CCol} from '@coreui/react';
 import { MasterWithServiceCard } from '../../Components/MasterWithServiceCard';
 import { ServicesPopup } from '../../Components/ServicesPopup';
-import { Header } from "../../Components/Header";
-import { withPageGuard } from '../../HOC/withPageGuard';
 import './ChooseMaster.css';
 
 
@@ -12,7 +10,7 @@ import './ChooseMaster.css';
 const vars = { 
     "--cui-accordion-active-bg": "#000000",
     "--cui-accordion-btn-focus-border-color": "rgba(0,0,0,0.6)",
-    "--cui-accordion-btn-focus-box-shadow": "rgba(0,0,0,0.6)",
+    "--cui-accordion-btn-focus-box-shadow": "0 0 0 0.25rem rgba(0,0,0,0.25)",
     "--cui-accordion-active-color": '#ffffff',
     "--cui-accordion-btn-active-icon": 'url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27 fill=%27%23ffffff%27%3e%3cpath fill-rule=%27evenodd%27 d=%27M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z%27/%3e%3c/svg%3e")'
 }
@@ -29,7 +27,6 @@ const ChooseMaster = () => {
 
     return (
         <>
-            <Header/>
             <CContainer className="choose-master-page main-content page mb-5">
                 <CRow className="mb-4">
                     <CCol>
@@ -73,4 +70,4 @@ const ChooseMaster = () => {
     );
 };
 
-export default withPageGuard(ChooseMaster);
+export default ChooseMaster;

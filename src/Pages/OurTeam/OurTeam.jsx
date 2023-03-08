@@ -2,7 +2,6 @@ import {useEffect, useState } from "react";
 import { getMasterFreeDate } from "../../API";
 import { useDispatch, useSelector } from "react-redux";
 import {CContainer, CRow, CCol} from '@coreui/react';
-import { Header } from "../../Components/Header";
 import {MasterPopup} from "../../Components/MasterPopup";
 import { MasterCard } from "../../Components/MasterCard";
 import { user as userImg} from "../../Constants/images";
@@ -10,8 +9,8 @@ import { useFirstRender } from "../../Utils/CustomHooks/useFirstRender";
 import { setSelectedMasterId } from "../../Slices/master";
 import { setStartDate } from "../../Slices/date";
 import { Loader } from "../../Components/Loader";
+import { Header } from "../../Components/Header";
 import { Footer } from "../../Components/Footer";
-import { withPageGuard } from "../../HOC/withPageGuard";
 import './OurTeam.css';
 
 
@@ -80,7 +79,7 @@ const OurTeam = () => {
 
 
     if(loading) {
-        return <Loader w={75} h={75} className="loader" style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}/>
+        return <Loader w={75} h={75} className="preloader" style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}/>
     }
 
     return (
@@ -133,4 +132,4 @@ const OurTeam = () => {
     );
 };
 
-export default withPageGuard(OurTeam);
+export default OurTeam;

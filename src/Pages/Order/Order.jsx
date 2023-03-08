@@ -4,8 +4,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import {CContainer,CRow,CCol,CCard,CCardBody,CCardTitle,CForm,CFormInput,CButton} from '@coreui/react';
 import { v4 as uuidv4 } from 'uuid';
-import { Header } from "../../Components/Header";
-import { withPageGuard } from '../../HOC/withPageGuard';
 import { ReactComponent as CashIcon } from '../../Images/cash.svg'
 import { ReactComponent as TimeIcon } from '../../Images/time.svg'
 import { tg } from '../../App';
@@ -42,7 +40,12 @@ function addTime(first,second) {
 const schema = yup.object({
     phone: yup.string().matches(/^\+?3?8?(0[5-9][0-9]\d{7})$/, "Введено не коректний номер телефону")
     .required("Це поле обов'язкове для заповнення"),
-  }).required();    
+  }).required();
+
+
+const vars = { 
+    "--cui-input-focus-border-color": "rgba(0,0,0,0.6)"
+}
 
 
 const Order = () => {
@@ -57,6 +60,11 @@ const Order = () => {
         }
     );
     const onSubmit = async data => {
+
+        // postOrder({
+        //     phone: data?.phone
+        // });
+
         const queryResult = await fetch("https://api.telegram.org/bot5816875473:AAE_FqB_w_qh4RGwSeOKETlTq8uOkemo_d8/answerWebAppQuery", {
             method: "POST",
             headers: {
@@ -70,28 +78,26 @@ const Order = () => {
                         "id": tg?.initDataUnsafe?.user?.id + uuidv4(),
                         "title": 'New Order',
                         "input_message_content": {
-                            "message_text": JSON.stringify({user: tg?.initDataUnsafe?.user, date: new Date().toString()})
+                            "message_text": "Дякуємо за Вашу заявку!)"
                         }
                     }
                 }
             )
         });
 
-        const queryResultData = await queryResult.json();
+        // const queryResultData = await queryResult.json();
 
-        const result =  await fetch("https://webhook.site/f8718d1e-334a-4f35-b35a-fdb3ffe79ec6", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({"queryResult": queryResultData, "date": new Date().toString()})
-        });
+        // const result =  await fetch("https://webhook.site/f8718d1e-334a-4f35-b35a-fdb3ffe79ec6", {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json"
+        //     },
+        //     body: JSON.stringify({"queryResult": queryResultData, "date": new Date().toString()})
+        // });
 
         // const dat = await result?.json();
         // console.log(dat);
-        // postOrder({
-        //     phone: data?.phone
-        // });
+
     }
 
     let accumulatedDuration = service?.duration;
@@ -100,7 +106,6 @@ const Order = () => {
 
     return (
         <>
-            <Header/>
             <CContainer className="order-page main-content page mb-5">
                 <CRow className="mb-4">
                     <CCol>
@@ -160,6 +165,7 @@ const Order = () => {
                 <CForm onSubmit={handleSubmit(onSubmit)}> 
                     <CCol xs="auto" className="mb-3">
                         <CFormInput
+                            style={vars}
                             id="phone"
                             label="Телефон *"
                             placeholder="Телефон"
@@ -185,4 +191,4 @@ const Order = () => {
     );
 };
 
-export default withPageGuard(Order);
+export default Order;

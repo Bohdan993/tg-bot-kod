@@ -4,7 +4,6 @@ import './About.css';
 const About = () => {
     return (
         <>
-            <Header/>
         </>
     );
 };

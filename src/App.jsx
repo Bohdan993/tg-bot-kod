@@ -43,7 +43,6 @@ function App() {
       <Routes>
         <Route index element={<ChooseCity />} />
         <Route path="/" element={<MainLayout />}>
-          {/* <Route path={`/${ROUTES['employment']}`} element={<ChooseMaster />} /> */}
           <Route path="about/:companyId" element={<About />} />
           <Route path="masters/:companyId" element={<ChooseMaster/>} />
           <Route path="related-services/:companyId" element={<RelatedServices/>}/>

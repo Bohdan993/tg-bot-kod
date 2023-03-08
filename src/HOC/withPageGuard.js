@@ -19,7 +19,7 @@ export const withPageGuard = (Wrapped) => {
         }, []);
 
         if(!ready) {
-            return <Loader w={75} h={75} className="loader" style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}/>
+            return <Loader w={75} h={75} className="preloader" style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}/>
         }
 
         return (
