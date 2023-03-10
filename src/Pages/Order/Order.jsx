@@ -43,7 +43,8 @@ const schema = yup.object({
 
 
 const vars = { 
-    "--cui-input-focus-border-color": "rgba(0,0,0,0.6)"
+    "--cui-input-focus-border-color": "rgba(0,0,0,0.6)",
+    "color": "#000000"
 }
 
 
@@ -64,31 +65,31 @@ const Order = () => {
     );
 
     const onSubmit = async data => {
-        const orderData = await postOrder({
-            phone: data?.phone,
-            reservedOn: selectedDate + "T" + selectedTime.split("-")?.[0] + ":00.000",
-            masterId,
-            companyId,
-            serviceId: service?.id,
-            relatedIds: relatedIds ? relatedIds : [],
-            name: tg?.initDataUnsafe?.user?.first_name,
-            lastName: tg?.initDataUnsafe?.user?.last_name || "Прізвище",
-            comment: `Нове замовлення від користувача ${tg?.initDataUnsafe?.user?.username ? '@' + tg?.initDataUnsafe?.user?.username : ''}`
-        });
-        console.log(orderData);
-        const message = orderData?.data?.thank_you_page?.message + `Наш номер телефону: ${companyPhone}.\n`;
-        // const webAppData =  await postWebAppResult({
+        // const orderData = await postOrder({
         //     phone: data?.phone,
         //     reservedOn: selectedDate + "T" + selectedTime.split("-")?.[0] + ":00.000",
+        //     masterId,
+        //     companyId,
+        //     serviceId: service?.id,
+        //     relatedIds: relatedIds ? relatedIds : [],
         //     name: tg?.initDataUnsafe?.user?.first_name,
         //     lastName: tg?.initDataUnsafe?.user?.last_name || "Прізвище",
-        //     userName: tg?.initDataUnsafe?.user?.username || "",
+        //     comment: `Нове замовлення від користувача ${tg?.initDataUnsafe?.user?.username ? '@' + tg?.initDataUnsafe?.user?.username : ''}`
         // });
-        // console.log(webAppData);
+        // console.log(orderData);
+        // const message = orderData?.data?.thank_you_page?.message + `Наш номер телефону: ${companyPhone}.\n`;
+        const webAppData =  await postWebAppResult({
+            phone: data?.phone,
+            reservedOn: selectedDate + "T" + selectedTime.split("-")?.[0] + ":00.000",
+            name: tg?.initDataUnsafe?.user?.first_name || "Ім'я",
+            lastName: tg?.initDataUnsafe?.user?.last_name || "Прізвище",
+            userName: tg?.initDataUnsafe?.user?.username || "",
+        });
+        console.log(webAppData);
         const tgData = await postTgResult({
             query_id: tg?.initDataUnsafe?.query_id,
             user_id: tg?.initDataUnsafe?.user?.id,
-            message
+            message: "Дякуємо за замовлення!)"
         });
         console.log(tgData);
     }
@@ -174,7 +175,7 @@ const Order = () => {
                         <p className="text-danger">{errors?.phone?.message}</p>
                     </CCol>
                     <CCol xs="auto" className="d-flex justify-content-center">
-                        <CButton type="submit" color="dark" size="lg" className="mb-3" onClick={handleSubmit}>
+                        <CButton type="submit" color="dark" size="lg" className="mb-3 tg-border-reverce tg-text-reverce tg-background-reverce" onClick={handleSubmit}>
                             Оформити запис
                         </CButton>
                     </CCol>

@@ -10,6 +10,7 @@
     padding: 10px 10px max(env(safe-area-inset-bottom),10px);
     z-index: 5;
     flex-shrink: 0;
+    color: #000000;
 }
 
 .footer a {

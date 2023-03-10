@@ -47,7 +47,7 @@ const ServiceRegistration = () => {
                     </p>
                     <CRow className="mt-5">
                         <CCol className="d-flex justify-content-center align-items-center">
-                            <CButton size="lg" color="dark" component="a" href={`tel:${company?.profile?.phone}`} rel="noopener noreferrer" target="_blank">
+                            <CButton size="lg" color="dark" component="a" href={`tel:${company?.profile?.phone}`} rel="noopener noreferrer" target="_blank" className="tg-border-reverce tg-text-reverce tg-background-reverce">
                                 Зателефонувати
                             </CButton>
                         </CCol>

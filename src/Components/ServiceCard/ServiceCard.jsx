@@ -1,6 +1,8 @@
 import {CContainer,CRow,CCol,CCard,CCardBody,CCardTitle} from '@coreui/react';
 import { ReactComponent as CashIcon } from '../../Images/cash.svg'
 import { ReactComponent as TimeIcon } from '../../Images/time.svg'
+import { ReactComponent as PlusIcon } from '../../Images/plus.svg'
+import { ReactComponent as CheckIcon } from '../../Images/check.svg'
 import './ServiceCard.css';
 
 const ServiceCard = ({service, user = {}, ind = 0, handleClick = () => {}, active = false, className = ""}) => {
@@ -12,7 +14,7 @@ const ServiceCard = ({service, user = {}, ind = 0, handleClick = () => {}, activ
             <CRow>
                 <CCol>
                     <CCard className="flex-column justify-content-between flex-sm-row mb-3">
-                        <CCardBody className="d-flex flex-column justify-content-between flex-sm-row align-items-center py-2">
+                        <CCardBody className="d-flex flex-row justify-content-between align-items-center py-2 flex-nowrap">
                             <CContainer>
                                 <CCardTitle>{service?.name}</CCardTitle>
                                 <CContainer className="ps-0">
@@ -23,7 +25,9 @@ const ServiceCard = ({service, user = {}, ind = 0, handleClick = () => {}, activ
                                 </CContainer>
                             </CContainer>
                             <CContainer className="w-auto">
-
+                                <div className="icon-wrapper small">
+                                    {!active ? <PlusIcon/> : <CheckIcon fill="green"/>}
+                                </div>
                             </CContainer>
                         </CCardBody>
                     </CCard>

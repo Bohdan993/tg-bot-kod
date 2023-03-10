@@ -4,35 +4,87 @@
 
 html {
   font-size: 14px;
+  /* overflow-x: hidden; */
 }
 
 body {
   background-color: var(--tg-theme-bg-color);
-  color: var(--tg-theme-text-color);
+  color: #000000;
+  overflow-x: hidden;
 }
+
+/* .row {
+  margin-left: 0;
+  margin-right: 0;
+} */
+
+/* .container-fluid {
+  padding: 0;
+} */
 
 .tg-text {
   color: var(--tg-theme-text-color);
+}
+
+.tg-text-reverce {
+  color: var(--tg-theme-background-color);
 }
 
 .tg-border {
   border-color: var(--tg-theme-text-color);
 }
 
+.tg-border-reverce {
+  border-color: var(--tg-theme-bg-color);
+}
+
 .tg-background {
   background-color: var(--tg-theme-bg-color);
+
+}
+
+.tg-background-reverce {
+  background-color: var(--tg-theme-text-color);
 }
 
 .tg-btn-text {
-  color: var(--tg-theme-button-text-color);
+  color: var(--tg-theme-text-color);
 }
 
 .tg-icon {
   stroke: var(--tg-theme-text-color);
 }
 
+.black-color {
+  color: #000000;
+}
+
+.white-color {
+  color: #ffffff;
+}
+
+.black-bg {
+  background-color: #000000;
+}
+
+.black-border {
+  border-color: #000000;
+}
+
 .card {
   position: relative;
+}
+
+.btn.btn-outline-dark {
+  background-color: white;
+  color: var(--tg-theme-text-color);
+  border-color: var(--tg-theme-text-color);
+}
+
+.btn.btn-outline-dark.active {
+  background-color: var(--tg-theme-text-color);
+  color: var(--tg-theme-bg-color);
+  border-color: var(--tg-theme-text-color);
 }
 
 .page:not(.choose-city-page) {
@@ -133,6 +185,11 @@ body {
   width: 450px;
 }
 
+.react-calendar__tile:disabled,
+.react-calendar__navigation button:disabled {
+  background-color: var(--cui-gray-200);
+}
+
 .react-calendar__tile--active,.react-calendar__tile--active:enabled:hover, .react-calendar__tile--active:enabled:focus {
   background-color: #000000;
 }
@@ -181,7 +238,24 @@ body {
   background-color: var(--cui-gray-300);
 }
 
+.icon-wrapper.small {
+  position: relative;
+  width: 25px;
+  height: 25px;
+  border-radius: 15px;
+  background-color: unset;
+}
+
 .icon-wrapper svg {
+  position: absolute;
+  width: 75%;
+  height: 75%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.icon-wrapper.small svg {
   position: absolute;
   width: 75%;
   height: 75%;

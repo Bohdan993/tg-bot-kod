@@ -108,7 +108,7 @@ const ChooseDate = () => {
     }
 
     return (
-        <>
+        <CContainer fluid>
             <Header/>
             <CContainer className="choose-master-page main-content page mb-5">
                 <CRow className="mb-4">
@@ -147,7 +147,7 @@ const ChooseDate = () => {
                 <ServicesPopup/>
             </CContainer>
             <Footer/>
-        </>
+        </CContainer >
     );
 };
 

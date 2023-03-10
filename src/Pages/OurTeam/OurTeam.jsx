@@ -103,7 +103,7 @@ const OurTeam = () => {
     }
 
     return (
-        <>
+        <CContainer fluid>
             <Header/>
             <CContainer className="our-team-page main-content page mb-5">
                 <CRow className="mb-4">
@@ -148,7 +148,7 @@ const OurTeam = () => {
                 />
             </CContainer>
             <Footer/>
-        </>
+        </CContainer>
     );
 };
 

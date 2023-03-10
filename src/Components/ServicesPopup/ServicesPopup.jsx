@@ -61,7 +61,7 @@ const ServicesPopup = () => {
               </CContainer>
             </CContainer>
             <CContainer className="d-flex justify-content-end align-items-center pe-0 flex-shrink-1 w-auto">
-              <CButton color="dark" size="lg" onClick={handleClick}>
+              <CButton color="dark" size="lg" onClick={handleClick} className="black-bg black-border white-color">
                   Далі
               </CButton>
             </CContainer>
