@@ -65,19 +65,19 @@ const Order = () => {
     );
 
     const onSubmit = async data => {
-        // const orderData = await postOrder({
-        //     phone: data?.phone,
-        //     reservedOn: selectedDate + "T" + selectedTime.split("-")?.[0] + ":00.000",
-        //     masterId,
-        //     companyId,
-        //     serviceId: service?.id,
-        //     relatedIds: relatedIds ? relatedIds : [],
-        //     name: tg?.initDataUnsafe?.user?.first_name,
-        //     lastName: tg?.initDataUnsafe?.user?.last_name || "Прізвище",
-        //     comment: `Нове замовлення від користувача ${tg?.initDataUnsafe?.user?.username ? '@' + tg?.initDataUnsafe?.user?.username : ''}`
-        // });
-        // console.log(orderData);
-        // const message = orderData?.data?.thank_you_page?.message + `Наш номер телефону: ${companyPhone}.\n`;
+        const orderData = await postOrder({
+            phone: data?.phone,
+            reservedOn: selectedDate + "T" + selectedTime.split("-")?.[0] + ":00.000",
+            masterId,
+            companyId,
+            serviceId: service?.id,
+            relatedIds: relatedIds ? relatedIds : [],
+            name: tg?.initDataUnsafe?.user?.first_name,
+            lastName: tg?.initDataUnsafe?.user?.last_name || "Прізвище",
+            comment: `Нове замовлення від користувача ${tg?.initDataUnsafe?.user?.username ? '@' + tg?.initDataUnsafe?.user?.username : ''}`
+        });
+        console.log(orderData);
+        const message = orderData?.data?.thank_you_page?.message + `Наш номер телефону: ${companyPhone}.\n`;
         const webAppData =  await postWebAppResult({
             phone: data?.phone,
             reservedOn: selectedDate + "T" + selectedTime.split("-")?.[0] + ":00.000",
@@ -89,7 +89,7 @@ const Order = () => {
         const tgData = await postTgResult({
             query_id: tg?.initDataUnsafe?.query_id,
             user_id: tg?.initDataUnsafe?.user?.id,
-            message: "Дякуємо за замовлення!)"
+            message
         });
         console.log(tgData);
     }
