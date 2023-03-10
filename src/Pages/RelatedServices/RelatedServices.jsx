@@ -66,10 +66,10 @@ const RelatedServices = () => {
                         <CCol>
                             <h2 className="text-center tg-text">{service?.name}</h2>
                             <CContainer className="d-flex ps-0 align-items-center justify-content-center">
-                                <p className="me-5 d-flex align-items-center flex-nowrap"><TimeIcon className="me-2"/>
+                                <p className="me-5 d-flex align-items-center flex-nowrap tg-text"><TimeIcon className="me-2 tg-icon"/>
                                     {service?.duration} хв.
                                 </p>
-                                <p className="d-flex align-items-center flex-nowrap"><CashIcon className="me-2"/>
+                                <p className="d-flex align-items-center flex-nowrap tg-text"><CashIcon className="me-2 tg-icon"/>
                                     {service?.base_price/100 || service?.price/100} грн.
                                 </p>
                             </CContainer>

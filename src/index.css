@@ -8,10 +8,27 @@ html {
 
 body {
   background-color: var(--tg-theme-bg-color);
+  color: var(--tg-theme-text-color);
 }
 
 .tg-text {
   color: var(--tg-theme-text-color);
+}
+
+.tg-border {
+  border-color: var(--tg-theme-text-color);
+}
+
+.tg-background {
+  background-color: var(--tg-theme-bg-color);
+}
+
+.tg-btn-text {
+  color: var(--tg-theme-button-text-color);
+}
+
+.tg-icon {
+  stroke: var(--tg-theme-text-color);
 }
 
 .card {

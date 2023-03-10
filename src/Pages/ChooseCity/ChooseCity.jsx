@@ -53,7 +53,7 @@ const ChooseCity = () => {
                                                 {company?.address?.address_1}, {company?.address?.city}, {company?.address?.postal_code}, {company?.address?.meta?.google_country_name}
                                             </CCardText>
                                             {/* <Link className="btn btn-dark" to={'masters/' + company?.id} onClick={(e) => handleClick(company?.id, e)}>Відкрити</Link> */}
-                                            <CContainer className="btn btn-dark d-inline" onClick={(e) => handleClick(company, e)}>Відкрити</CContainer>
+                                            <CContainer className="btn btn-dark d-inline tg-btn-text tg-background tg-border" onClick={(e) => handleClick(company, e)}>Відкрити</CContainer>
                                         </CCardBody>
                                     </CCard>
                                 </CCol>
