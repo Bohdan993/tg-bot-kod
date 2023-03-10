@@ -22,7 +22,7 @@ const MasterCard = ({user, services = [], className = '', extended = false, date
                                     extended ? 
                                     (
                                         <CContainer className="d-flex flex-column justify-content-between align-items-sm-start align-items-center">
-                                            <CCardTitle>{user?.name} {services?.length ? `(${services?.length})` : ''}</CCardTitle>
+                                            <CCardTitle className="text-center">{user?.name} {services?.length ? `(${services?.length})` : ''}</CCardTitle>
                                             {
                                                 info ? 
                                                 ( 

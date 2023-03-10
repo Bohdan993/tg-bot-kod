@@ -48,9 +48,9 @@ const ServicesPopup = () => {
           <COffcanvasHeader className='py-0'>
             <COffcanvasTitle>Ваше замовлення</COffcanvasTitle>
           </COffcanvasHeader>
-          <COffcanvasBody className="d-flex">
+          <COffcanvasBody className="d-flex pt-2 pb-0">
             <CContainer className="ps-0 flex-grow-1">
-              <h4>{service?.name}{relatedServices?.length ? `, ${relatedServices.map(el => el?.name).join(', ')}` : ''}</h4>
+              <h4 className="fs-6">{service?.name}{relatedServices?.length ? `, ${relatedServices.map(el => el?.name).join(', ')}` : ''}</h4>
               <CContainer className="d-flex ps-0">
                 <p className="me-5 d-flex align-items-center flex-nowrap mb-0"><TimeIcon className="me-2"/>
                   {service?.duration + (relatedServices?.length ? relatedServices?.map(el => el?.duration)?.reduce((acc, curr) => acc+curr) : 0)} хв.
@@ -61,7 +61,7 @@ const ServicesPopup = () => {
               </CContainer>
             </CContainer>
             <CContainer className="d-flex justify-content-end align-items-center pe-0 flex-shrink-1 w-auto">
-              <CButton color="dark" size="lg" onClick={handleClick} className="black-bg black-border white-color">
+              <CButton color="dark" size="md" onClick={handleClick} className="black-bg black-border white-color">
                   Далі
               </CButton>
             </CContainer>

@@ -27,7 +27,7 @@ body {
 }
 
 .tg-text-reverce {
-  color: var(--tg-theme-background-color);
+  color: var(--tg-theme-bg-color);
 }
 
 .tg-border {
@@ -35,7 +35,7 @@ body {
 }
 
 .tg-border-reverce {
-  border-color: var(--tg-theme-bg-color);
+  border-color: var(--tg-theme-text-color);
 }
 
 .tg-background {
@@ -158,6 +158,8 @@ body {
   box-shadow: 0 19px 38px rgb(56 56 104 / 15%);
   z-index: 6;
   border: unset;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 .custom-offcanvas.offcanvas-bottom {
@@ -171,6 +173,7 @@ body {
 .custom-offcanvas .offcanvas-header, .custom-offcanvas .offcanvas-body {
   padding-left: 0;
   padding-right: 0;
+  /* padding-bottom: 0; */
 }
 
 .preloader svg {
