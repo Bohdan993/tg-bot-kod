@@ -45,11 +45,13 @@ const MasterCard = ({user, services = [], className = '', extended = false, date
                                     )
                                 }
                             </CContainer>
-                            <CContainer className="w-auto">
-                                <div className="icon-wrapper small">
-                                    {!active ? <PlusIcon/> : <CheckIcon fill="green"/>}
-                                </div>
-                            </CContainer>
+                            {extended && (
+                                <CContainer className="w-auto">
+                                    <div className="icon-wrapper small">
+                                        {!active ? <PlusIcon/> : <CheckIcon fill="green"/>}
+                                    </div>
+                                </CContainer>
+                            )}
                         </CCardBody> 
                     </CCard>
                 </CCol>

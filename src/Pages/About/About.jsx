@@ -16,13 +16,13 @@ const About = () => {
                         </div>
                     </CCol>
                     <CCol xs={12} className="d-flex justify-content-center align-items-center mb-4 flex-column">
-                        <p className="fs-3 fw-bolder tg-text" style={{color: "#000000"}}>{company?.name}</p>
+                        <p className="fs-3 fw-bolder tg-text">{company?.name}</p>
                         <a href={company?.profile?.instagram} target="_blank" rel="noopener noreferrer" className="mb-4">
                             <div className="icon-wrapper">
                                 <InstagramIcon/>
                             </div>
                         </a>
-                        <p className="fs-5 tg-text" style={{color: "#000000"}}>{company?.profile?.description}</p>
+                        <p className="fs-5 tg-text">{company?.profile?.description}</p>
                     </CCol>
                 </CRow>
                 <CRow className="mt-5">

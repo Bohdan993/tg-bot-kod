@@ -76,15 +76,15 @@ body {
 }
 
 .btn.btn-outline-dark {
-  background-color: white;
-  color: var(--tg-theme-text-color);
+  background-color: var(--tg-theme-text-color);
   border-color: var(--tg-theme-text-color);
+  color: var(--tg-theme-secondary-bg-color);
 }
 
 .btn.btn-outline-dark.active {
-  background-color: var(--tg-theme-text-color);
-  color: var(--tg-theme-bg-color);
-  border-color: var(--tg-theme-text-color);
+  background-color: var(--tg-theme-secondary-bg-color);
+  border-color: var(--tg-theme-secondary-bg-color);
+  color: var(--tg-theme-text-color);
 }
 
 .page:not(.choose-city-page) {
@@ -262,4 +262,8 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.form-label {
+  color: var(--tg-theme-text-color);
 }

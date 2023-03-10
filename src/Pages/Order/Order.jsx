@@ -151,7 +151,7 @@ const Order = () => {
                     </CRow>
                     <CRow>
                         <CCol xs={12}>
-                            <p className="text-center fs-5 d-flex justify-content-center align-items-center">Усього <CashIcon className="mx-2"/>{accumulatedPrice} грн.</p>
+                            <p className="text-center fs-5 d-flex justify-content-center align-items-center tg-text">Усього <CashIcon className="mx-2"/>{accumulatedPrice} грн.</p>
                         </CCol>
                     </CRow>
                 </CContainer>
