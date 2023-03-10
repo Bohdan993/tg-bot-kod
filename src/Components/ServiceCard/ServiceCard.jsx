@@ -3,10 +3,10 @@ import { ReactComponent as CashIcon } from '../../Images/cash.svg'
 import { ReactComponent as TimeIcon } from '../../Images/time.svg'
 import './ServiceCard.css';
 
-const ServiceCard = ({service, user, ind, handleClick, active = false}) => {
+const ServiceCard = ({service, user = {}, ind = 0, handleClick = () => {}, active = false, className = ""}) => {
     return (
         <CContainer 
-            className={`master-service-card ${active ? "active": ""}`}
+            className={`master-service-card ${active ? "active": ""} ${className}`}
             onClick={() => handleClick(ind, service, user)}
         >
             <CRow>

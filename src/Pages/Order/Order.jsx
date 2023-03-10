@@ -3,11 +3,10 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import {CContainer,CRow,CCol,CCard,CCardBody,CCardTitle,CForm,CFormInput,CButton} from '@coreui/react';
-import { v4 as uuidv4 } from 'uuid';
 import { ReactComponent as CashIcon } from '../../Images/cash.svg'
 import { ReactComponent as TimeIcon } from '../../Images/time.svg'
 import { tg } from '../../App';
-import { postOrder } from '../../API';
+import { postOrder, postWebAppResult, postTgResult } from '../../API';
 import './Order.css';
 
 
@@ -53,51 +52,45 @@ const Order = () => {
     const relatedServices = useSelector(state => state.service.activeRelatedServices);
     const selectedDate = useSelector(state => state.date.selectedDate);
     const selectedTime = useSelector(state => state.date.selectedTime);
+    const companyId = useSelector(state => state.company.activeCompany?.id);
+    const companyPhone = useSelector(state => state.app.info?.company?.profile?.phone?.[0]);
+    const masterId = useSelector(state => state.master.activeMaster?.id);
+    const relatedIds = relatedServices?.map(service => service?.id);
     const { register, handleSubmit, formState:{ errors } } = useForm(
         {   
             mode: "onBlur",
             resolver: yupResolver(schema)
         }
     );
+
     const onSubmit = async data => {
-
-        // postOrder({
-        //     phone: data?.phone
-        // });
-
-        const queryResult = await fetch("https://api.telegram.org/bot5816875473:AAE_FqB_w_qh4RGwSeOKETlTq8uOkemo_d8/answerWebAppQuery", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(
-                {
-                    "web_app_query_id": tg?.initDataUnsafe?.query_id,
-                    "result": {
-                        "type": "article",
-                        "id": tg?.initDataUnsafe?.user?.id + uuidv4(),
-                        "title": 'New Order',
-                        "input_message_content": {
-                            "message_text": "Дякуємо за Вашу заявку!)"
-                        }
-                    }
-                }
-            )
+        const orderData = await postOrder({
+            phone: data?.phone,
+            reservedOn: selectedDate + "T" + selectedTime.split("-")?.[0] + ":00.000",
+            masterId,
+            companyId,
+            serviceId: service?.id,
+            relatedIds: relatedIds ? relatedIds : [],
+            name: tg?.initDataUnsafe?.user?.first_name,
+            lastName: tg?.initDataUnsafe?.user?.last_name || "Прізвище",
+            comment: `Нове замовлення від користувача ${tg?.initDataUnsafe?.user?.username ? '@' + tg?.initDataUnsafe?.user?.username : ''}`
         });
-
-        // const queryResultData = await queryResult.json();
-
-        // const result =  await fetch("https://webhook.site/f8718d1e-334a-4f35-b35a-fdb3ffe79ec6", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     body: JSON.stringify({"queryResult": queryResultData, "date": new Date().toString()})
+        console.log(orderData);
+        const message = orderData?.data?.thank_you_page?.message + `Наш номер телефону: ${companyPhone}.\n`;
+        // const webAppData =  await postWebAppResult({
+        //     phone: data?.phone,
+        //     reservedOn: selectedDate + "T" + selectedTime.split("-")?.[0] + ":00.000",
+        //     name: tg?.initDataUnsafe?.user?.first_name,
+        //     lastName: tg?.initDataUnsafe?.user?.last_name || "Прізвище",
+        //     userName: tg?.initDataUnsafe?.user?.username || "",
         // });
-
-        // const dat = await result?.json();
-        // console.log(dat);
-
+        // console.log(webAppData);
+        const tgData = await postTgResult({
+            query_id: tg?.initDataUnsafe?.query_id,
+            user_id: tg?.initDataUnsafe?.user?.id,
+            message
+        });
+        console.log(tgData);
     }
 
     let accumulatedDuration = service?.duration;

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 import {CContainer, CRow, CCol, CButton} from '@coreui/react';
 import Calendar from 'react-calendar';
 import { Loader } from "../../Components/Loader";
@@ -16,17 +17,22 @@ const PERIOD = 30;
 
 
 const ChooseDate = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [value, onChange] = useState(new Date());
-    const [loading, setLoading] = useState(true);
-    const [availableDays, setAvailableDays] = useState(null);
-    const [availableSpots, setAvailableSpots] = useState(null);
-    const [activeSpot, setActiveSpot] = useState(null);
     const companyId = useSelector(state => state.company.activeCompany?.id);
     const masterId = useSelector(state => state.master.selectedMasterId);
     const serviceId = useSelector(state => state.service.activeService?.id);
     const relatedServicesIds = useSelector(state => state.service.activeRelatedServices?.map(service => service?.id)?.join('_'));
     const startDate = useSelector(state => state.date.startDate);
+    const selectedDate = useSelector(state => state.date.selectedDate);
+    const selectedTime = useSelector(state => state.date.selectedTime);
+    const [ready, setReady] = useState(false);
+    const [value, onChange] = useState(selectedDate? new Date(selectedDate) : new Date());
+    const [loading, setLoading] = useState(true);
+    const [availableDays, setAvailableDays] = useState(null);
+    const [availableSpots, setAvailableSpots] = useState(null);
+    const [activeSpot, setActiveSpot] = useState(selectedTime || null);
+
 
     let start = !startDate ? transformDate(new Date()) : transformDate(startDate);
     let end = new Date(start);
@@ -34,7 +40,7 @@ const ChooseDate = () => {
     end = transformDate(end);
    
 
-    const tileDisabledHandle = ({activeStartDate, date, view }) => {
+    const tileDisabledHandle = ({_, date,}) => {
         if(availableDays) {
             return !availableDays.find(day => day?.date === transformDate(date));
         }
@@ -44,6 +50,14 @@ const ChooseDate = () => {
         const spotValue = spot?.start + '-' +spot?.end;
         setActiveSpot(spotValue);
     }
+
+    useEffect(()=>{
+        if(!companyId) {
+            navigate('/');
+            return;
+        }
+        setReady(true);
+    }, []);
 
     useEffect(()=>{
         const fetch = async () => {
@@ -58,13 +72,14 @@ const ChooseDate = () => {
             });
             setAvailableDays(result?.days);
             const dateValue = new Date(result?.days[0]?.date);
-            onChange(dateValue);
+            onChange(prev => prev.getTime() > dateValue.getTime() ? prev : dateValue);
             const spotValue = result?.days[0]?.spots?.[0]?.start + '-' + result?.days[0]?.spots?.[0]?.end;
-            setActiveSpot(spotValue);
+            setActiveSpot(prev => !prev ? spotValue : prev);
             setLoading(false);
         }
-        fetch();
-    }, []);
+        
+        if(ready) fetch();
+    }, [ready]);
 
     useEffect(()=>{
         if(availableDays) {
@@ -88,7 +103,7 @@ const ChooseDate = () => {
         dispatch(setSelectedTime(activeSpot));
     }, [activeSpot, dispatch])
 
-    if(loading) {
+    if(loading || !ready) {
         return <Loader w={75} h={75} className="preloader" style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}/>
     }
 

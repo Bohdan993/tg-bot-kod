@@ -1,6 +1,7 @@
 import {useEffect, useState } from "react";
 import { getMasterFreeDate } from "../../API";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import {CContainer, CRow, CCol} from '@coreui/react';
 import {MasterPopup} from "../../Components/MasterPopup";
 import { MasterCard } from "../../Components/MasterCard";
@@ -14,9 +15,28 @@ import { Footer } from "../../Components/Footer";
 import './OurTeam.css';
 
 
+function transformDate(date){
+    return (date.getDate() < 10 ? "0" + date.getDate() : date.getDate()) + '.' + 
+    (date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1));
+}
+
+function makePopupText(activeMaster, master, company){
+    return {
+        title: activeMaster === 0 ? '' : master?.name,
+        text: activeMaster === 0 ? 
+        'Ви будете записані до доступного співробітника.'  : 
+        (`${company?.address?.address_1}, 
+        ${company?.address?.city}, 
+        ${company?.address?.postal_code}, 
+        ${company?.address?.meta?.google_country_name}`),
+    }
+}
+
 
 const OurTeam = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [ready, setReady] = useState(false);
     const [time,setTime] = useState(null);
     const [date,setDate] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -36,49 +56,49 @@ const OurTeam = () => {
     }
 
     useEffect(()=>{
-        const fetch = async () => {
-            setLoading(true);
-            const result = await getMasterFreeDate({
-                locationId: companyId,
-                serviceId,
-                relatedIds: relatedServicesIds?.split('_')
-            });
-            const data = result?.[0]?.dates?.[0];
-            const time = data?.time?.start;
-            const date = new Date(data?.date);
-            const transformedDate = (date.getDate() < 10 ? "0" + date.getDate() : date.getDate()) + '.' + 
-            (date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1));
-            setDate(transformedDate);
-            setTime(time);
-            dispatch(setSelectedMasterId(activeMaster));
-            dispatch(setStartDate(transformedDate));
-            setLoading(false);
+        if(!companyId) {
+            navigate('/');
+            return;
         }
-
-        fetch();
+        setReady(true);
     }, []);
 
     useEffect(()=>{
-        setPopupText({
-            title: activeMaster === 0 ? '' : master?.name,
-            text: activeMaster === 0 ? 
-            'Ви будете записані до доступного співробітника.'  : 
-            (`${company?.address?.address_1}, 
-            ${company?.address?.city}, 
-            ${company?.address?.postal_code}, 
-            ${company?.address?.meta?.google_country_name}`),
-        });
+        const fetch = async () => {
+                setLoading(true);
+                const result = await getMasterFreeDate({
+                    locationId: companyId,
+                    serviceId,
+                    relatedIds: relatedServicesIds?.split('_')
+                });
+                const data = result?.[0]?.dates?.[0];
+                if(!data) navigate(`/service-registration/${companyId}`);
+                const time = data?.time?.start;
+                const date = new Date(data?.date);
+                const transformedDate = transformDate(date);
+                setDate(transformedDate);
+                setTime(time);
+                setLoading(false);
+        }
 
+        if(ready) fetch();
+    }, [ready]);
+
+    useEffect(()=>{
+        setPopupText(makePopupText(activeMaster, master, company));
         if(isFirstRender) {
             return;
         }
-
         dispatch(setSelectedMasterId(activeMaster));
         dispatch(setStartDate(activeMaster === 0 ? null : date));
     }, [activeMaster]);
 
+    useEffect(()=>{
+        dispatch(setStartDate(date));
+    }, [date, dispatch]);
 
-    if(loading) {
+
+    if(loading || !ready) {
         return <Loader w={75} h={75} className="preloader" style={{position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}/>
     }
 

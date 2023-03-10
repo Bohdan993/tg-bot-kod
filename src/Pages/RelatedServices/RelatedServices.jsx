@@ -89,7 +89,6 @@ const RelatedServices = () => {
                                 service={service}
                                 ind={ind}
                                 active={active}
-                                user={master}
                                 handleClick={handleClick}
                             />
                         )

@@ -10,8 +10,12 @@ import { RelatedServices } from './Pages/RelatedServices';
 import { OurTeam } from './Pages/OurTeam';
 import { ChooseDate } from './Pages/ChooseDate';
 import { Order } from './Pages/Order';
+import { ServiceRegistration } from './Pages/ServiceRegistration';
 import { Loader } from './Components/Loader';
 import './App.css';
+
+
+
 
 
 
@@ -27,7 +31,6 @@ function App() {
     dispatch(getBaseData());
   }, [dispatch]);
 
-  console.log(tg);
 
   if(isLoading) {
     return (
@@ -47,7 +50,9 @@ function App() {
           <Route path="masters/:companyId" element={<ChooseMaster/>} />
           <Route path="related-services/:companyId" element={<RelatedServices/>}/>
           <Route path="order/:companyId" element={<Order/>}/>
+          <Route path="service-registration/:companyId" element={<ServiceRegistration/>}/>
         </Route>
+        
         <Route path="our-team/:companyId" element={<OurTeam/>}/>
         <Route path="date/:companyId" element={<ChooseDate/>}/>
       </Routes>
