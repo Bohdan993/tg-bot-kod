@@ -42,7 +42,7 @@ const ChooseDate = () => {
 
     const tileDisabledHandle = ({_, date,}) => {
         if(availableDays) {
-            return !availableDays.find(day => day?.date === transformDate(date));
+            return !availableDays?.find(day => day?.date === transformDate(date));
         }
     }
 
@@ -83,13 +83,13 @@ const ChooseDate = () => {
 
     useEffect(()=>{
         if(availableDays) {
-            const found = availableDays.find(day => day?.date === transformDate(value));
+            const found = availableDays?.find(day => day?.date === transformDate(value));
             const spots = found?.spots;
             setAvailableSpots(spots);
             const spotValue = (spots?.[0]?.start + '-' + spots?.[0]?.end);
             setActiveSpot(prev => {
                 const [start, end] = prev.split('-');
-                const foundSpot = spots.find(spot => spot?.start === start && spot?.end === end);
+                const foundSpot = spots?.find(spot => spot?.start === start && spot?.end === end);
                 if(foundSpot) {
                     return prev;
                 }

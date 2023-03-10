@@ -13,6 +13,15 @@ const combinedReducer = combineReducers({
   date: dateReducer
 });
 
-export const rootReducer = (state, action) => {
+const rootReducer = (state, action) => {
   return combinedReducer(state, action);
 };
+
+
+export const resettableRootReducer = (state, action) => {
+  if (action.type === 'store/reset') {
+    const newState = {...state, company: undefined, master: undefined, service: undefined, date: undefined};
+    return rootReducer(newState, action);
+  }
+  return rootReducer(state, action);
+}

@@ -2,25 +2,25 @@ import {CContainer,CRow,CCol,CCard,CCardImage,CCardBody,CCardTitle,CCardText} fr
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setActiveCompany } from '../../Slices/company';
-
 import './ChooseCity.css';
 
 const ChooseCity = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const companyId = useSelector(state => state.company.activeCompany?.id);
     const masterId = useSelector(state => state.master.activeMaster?.id);
     const serviceId = useSelector(state => state.service.activeService?.id);
     const companyBranches = useSelector(state => state.app.info?.branches);
-    const dispatch = useDispatch();
 
     const handleClick = (company) => {
         if(String(companyId) === String(company?.id) && masterId && serviceId) {
             navigate(`/masters/${companyId}`);
         } else {
+            dispatch({type: 'store/reset'});
+            dispatch(setActiveCompany(company));
             navigate(`/masters/${company?.id}`);
         }
 
-        dispatch(setActiveCompany(company));
     }
 
     return (

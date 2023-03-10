@@ -30,7 +30,7 @@ const MasterPopup = ({title, text}) => {
                 </CContainer>
               </CContainer>
               <CContainer className="d-flex justify-content-end align-items-center pe-0 w-auto">
-                <CButton color="dark" size="md" onClick={handleClick} className="black-bg black-border white-color">
+                <CButton color="dark" onClick={handleClick} className="black-bg black-border white-color">
                     До вибору дати
                 </CButton>
               </CContainer>
