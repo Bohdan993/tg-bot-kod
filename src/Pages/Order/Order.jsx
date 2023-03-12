@@ -3,11 +3,14 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import {CContainer,CRow,CCol,CCard,CCardBody,CCardTitle,CForm,CFormInput,CButton} from '@coreui/react';
+import { Loader } from '../../Components/Loader';
 import { ReactComponent as CashIcon } from '../../Images/cash.svg'
 import { ReactComponent as TimeIcon } from '../../Images/time.svg'
 import { tg } from '../../App';
 import { postOrder, postWebAppResult, postTgResult } from '../../API';
 import './Order.css';
+
+
 
 
 function transformDate(date) {
@@ -57,7 +60,7 @@ const Order = () => {
     const companyPhone = useSelector(state => state.app.info?.company?.profile?.phone?.[0]);
     const masterId = useSelector(state => state.master.activeMaster?.id);
     const relatedIds = relatedServices?.map(service => service?.id);
-    const { register, handleSubmit, formState:{ errors } } = useForm(
+    const { register, handleSubmit, formState:{ errors, isSubmitting } } = useForm(
         {   
             mode: "onBlur",
             resolver: yupResolver(schema)
@@ -65,31 +68,29 @@ const Order = () => {
     );
 
     const onSubmit = async data => {
-        const orderData = await postOrder({
-            phone: data?.phone,
-            reservedOn: selectedDate + "T" + selectedTime.split("-")?.[0] + ":00.000",
-            masterId,
-            companyId,
-            serviceId: service?.id,
-            relatedIds: relatedIds ? relatedIds : [],
-            name: tg?.initDataUnsafe?.user?.first_name,
-            lastName: tg?.initDataUnsafe?.user?.last_name || "Прізвище",
-            comment: `Нове замовлення від користувача ${tg?.initDataUnsafe?.user?.username ? '@' + tg?.initDataUnsafe?.user?.username : ''}`
-        });
-        console.log(orderData);
-        const message = orderData?.data?.thank_you_page?.message + `Наш номер телефону: ${companyPhone}.\n`;
+        // const orderData = await postOrder({
+        //     phone: data?.phone,
+        //     reservedOn: selectedDate + "T" + selectedTime.split("-")?.[0] + ":00.000",
+        //     masterId,
+        //     companyId,
+        //     serviceId: service?.id,
+        //     relatedIds: relatedIds ? relatedIds : [],
+        //     name: tg?.initDataUnsafe?.user?.first_name,
+        //     lastName: tg?.initDataUnsafe?.user?.last_name || "Прізвище",
+        //     comment: `Нове замовлення від користувача ${tg?.initDataUnsafe?.user?.username ? '@' + tg?.initDataUnsafe?.user?.username : ''}`
+        // });
+        // console.log(orderData);
+        // const message = orderData?.data?.thank_you_page?.message + `Наш номер телефону: ${companyPhone}.\n`;
         const webAppData =  await postWebAppResult({
             phone: data?.phone,
-            reservedOn: selectedDate + "T" + selectedTime.split("-")?.[0] + ":00.000",
-            name: tg?.initDataUnsafe?.user?.first_name || "Ім'я",
-            lastName: tg?.initDataUnsafe?.user?.last_name || "Прізвище",
-            userName: tg?.initDataUnsafe?.user?.username || "",
+            reservedOn: selectedDate,
+            chatId: tg?.initDataUnsafe?.user?.id
         });
         console.log(webAppData);
         const tgData = await postTgResult({
             query_id: tg?.initDataUnsafe?.query_id,
             user_id: tg?.initDataUnsafe?.user?.id,
-            message
+            message: 'test'
         });
         console.log(tgData);
     }
@@ -175,8 +176,8 @@ const Order = () => {
                         <p className="text-danger">{errors?.phone?.message}</p>
                     </CCol>
                     <CCol xs="auto" className="d-flex justify-content-center">
-                        <CButton type="submit" color="dark" size="lg" className="mb-3 tg-border-reverce tg-text-reverce tg-background-reverce" onClick={handleSubmit}>
-                            Оформити запис
+                        <CButton type="submit" color="dark" size="lg" style={{maxWidth: 166}}className="w-100 mb-3 d-flex justify-content-center align-items-center tg-border-reverce tg-text-reverce tg-background-reverce position-relative" disabled={isSubmitting} onClick={handleSubmit}>
+                            {isSubmitting ? <Loader w={20} h={20} style={{stroke: '#000000'}} className="loader" /> :  "Оформити запис"}
                         </CButton>
                     </CCol>
                 </CForm>

@@ -176,12 +176,12 @@ body {
   /* padding-bottom: 0; */
 }
 
-.preloader svg {
+.preloader svg, .preloader circle  {
   stroke: var(--tg-theme-text-color);
 }
 
-.preloader circle {
-  stroke: var(--tg-theme-text-color);
+.loader svg, .loader circle {
+  stroke: var(--tg-theme-bg-color);
 }
 
 .react-calendar {
